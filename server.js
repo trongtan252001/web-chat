@@ -23,7 +23,6 @@ thongTinNguoiDung.push(new nguoiDung("linh", "123"));
 
 io.on("connection", (socket) => {
   socket.on("dangKy", (data) => {
-    socket.emit("dang");
     dangKy(data.name, data.password, socket);
   });
 });
@@ -33,16 +32,11 @@ function nguoiDung(name, password) {
   this.password = password;
 }
 function dangKy(name, password, socket) {
-  console.log(thongTinNguoiDung);
-  console.log("bat dau");
   for (var index = 0; index < thongTinNguoiDung.length; index++) {
     if (thongTinNguoiDung[index].name === name) {
-      console.log("trung ten");
       socket.emit("dang-ky-that-bai", name);
-
       return;
     }
   }
   thongTinNguoiDung.push(new nguoiDung(name, password));
-  console.log(thongTinNguoiDung);
 }
