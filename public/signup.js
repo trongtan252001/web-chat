@@ -19,3 +19,7 @@ function dangKy() {
 io.on("dang-ky-that-bai", (data) => {
   alert(data + " da co nguoi su dung ten");
 });
+io.on("dang-ky-thanh-cong", (data) => {
+  alert(data + " dang ky thanh cong");
+  window.location = "/";
+});

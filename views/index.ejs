@@ -5,26 +5,88 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>App chat</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container-fluid">
+    <div class="container-fluid margin-top">
         <div class="row">
             <div class="col-sm-4 left">
                 <div class="header-left">
+                    <div class="header">
+                        <h2 class="header-title">
+                            Message
+                        </h2>
+                        <div class="add-item">
+                            <i class="uil uil-plus header-icon"></i>
+                        </div>
+                    </div>
 
+                    <div class="search-name">
+                        <input class="search-input" name="search" placeholder="Search..." >
+                        <i class="uil uil-search search-icon"></i>
+                    </div>
+                    <div class="left-content">
+                        <ul class="list-items">
+                            <li class="item">
+                                <h3 class="title-item">Linh</h3>
+                                <p class="subtitle-item">Linh typing..</p>
+                            </li>
+                            <li class="item">
+                                <h3 class="title-item">Hung</h3>
+                                <p class="subtitle-item">Andy typing</p>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-5 center">
-                One of two columns
+            <div class="col-sm-8 center">
+                <div class="center-top">
+                    <div>
+                        <h3 class="title-center">
+                            Nguyen Van A
+                        </h3>
+                        <p class="subtitle-center">
+                            Dang hoat dong
+                        </p>
+                    </div>
+
+                </div>
+                <div class="frame-chat" id="out">
+                    <div class="chat-list" >
+
+                        <div class="chat bubble-left">Tin nhan 1</div>
+                        <div class="chat bubble-right">Tin nhan 2</div>
+                        <div class="chat bubble-left">Tin nhan 3</div>
+                        <div class="chat bubble-right">Tin nhan 4</div>
+                        <div class="chat bubble-right">Tin nhan 4</div>
+
+                        <div class="chat bubble-right">Tin nhan 4</div>
+                        <div class="chat bubble-right">Tin nhan 4</div>
+                        <div class="chat bubble-right">Tin nhan 4</div>
+
+                        <div class="chat bubble-right">Tin nhan 4</div>
+                        <div class="chat bubble-right">Tin nhan 4</div><div class="chat bubble-right">Tin nhan 4</div>
+
+                        <div class="chat bubble-right">Tin nhan 4</div>
+                        <div class="chat bubble-right">Tin nhan 4</div><div class="chat bubble-right">Tin nhan 4</div>
+
+                        <div class="chat bubble-right">Tin nhan 4</div>
+                        <div class="chat bubble-right">Tin nhan 4</div>
+                    </div>
+                </div>
+                <div class="center-bot">
+                    <input class="typing-input" name="search" placeholder="Aa" >
+                </div>
             </div>
-            <div class="col-sm-3 right">
-              One of three columns
-            </div>
+
           </div>
     </div>
+    <script>
+       var element = document.getElementById("out");
+        element.scrollTop = element.scrollHeight;
+    </script>
     <script src="script.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
