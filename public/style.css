@@ -174,3 +174,10 @@ li {
   font-family: var(--body-font);
   outline: none;
 }
+.item-search {
+  padding: 10px;
+  border-bottom: 0.01px solid #fff;
+}
+.sign-out > i {
+  font-size: 30px;
+}
