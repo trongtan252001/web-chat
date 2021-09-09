@@ -2,6 +2,8 @@ var io = io("http://localhost:3000");
 
 function searchFriend() {
   $(".left-content").html("");
+  var searchName = document.getElementById("acticve-icon");
+  searchName.classList.add("ass");
 }
 function search() {
   var input = document.getElementById("myInput");
