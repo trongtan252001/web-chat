@@ -155,7 +155,7 @@ li {
 }
 .send-chat {
   font-size: var(--h2-font-size);
-  margin-left: 20px;
+  padding: 5px 10px;
 }
 .typing-input {
   width: 100%;
