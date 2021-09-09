@@ -60,14 +60,4 @@ function dangNhap(name, password, socket) {
   socket.emit("dang-nhap-that-bai", name);
 }
 
-function testGitHub(name, password, socket) {
-  for (var index = 0; index < thongTinNguoiDung.length; index++) {
-    if (thongTinNguoiDung[index].name === name) {
-      socket.emit("dang-ky-that-bai", name);
-      return;
-    }
-  }
-  thongTinNguoiDung.push(new nguoiDung(name, password));
-  socket.emit("dang-ky-thanh-cong", name);
-}
 
