@@ -60,6 +60,8 @@ function dangNhap(name, password, socket) {
   socket.emit("dang-nhap-that-bai", name);
 }
 // commit 2
+// commit 3
+//commit 4
 function testGitHub(name, password, socket) {
   for (var index = 0; index < thongTinNguoiDung.length; index++) {
     if (thongTinNguoiDung[index].name === name) {
