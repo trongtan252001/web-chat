@@ -74,3 +74,5 @@ function dangNhap(name, password, socket) {
   }
   socket.emit("dang-nhap-that-bai", name);
 }
+
+
