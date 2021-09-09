@@ -70,3 +70,5 @@ function testGitHub(name, password, socket) {
   thongTinNguoiDung.push(new nguoiDung(name, password));
   socket.emit("dang-ky-thanh-cong", name);
 }
+
+// commit 300
