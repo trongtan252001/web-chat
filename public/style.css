@@ -78,11 +78,18 @@ li {
 }
 .search-name {
   position: relative;
+  display: flex;
 }
+.arrow-icon {
+  margin-right: 8px;
+  font-size: var(--h2-font-size);
+}
+
+/* .arrow-icon, */
 .search-icon {
   position: absolute;
   top: 6px;
-  left: 8px;
+  left: 40px;
 }
 .item:first-child {
   margin-top: 20px;
@@ -142,11 +149,11 @@ li {
 .bubble-left {
   background: #242526;
   float: left;
-  margin-right: 10%;
+  /* margin-left: 10px; */
 }
 .bubble-right {
   float: right;
-  margin-left: 10%;
+  margin-right: 10px;
   background-color: #4f9fe9;
 }
 .center-bot {
