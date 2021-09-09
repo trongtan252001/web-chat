@@ -104,16 +104,7 @@ li {
 .subtitle-center {
   font-size: var(--small-font-size);
 }
-.typing-input {
-  width: 100%;
-  background-color: var(--input-color);
-  color: var(--text-color);
-  border: 1px;
-  border-radius: 10px;
-  padding: 10px 20px;
-  font-family: var(--body-font);
-  outline: none;
-}
+
 .center {
   display: flex;
   flex-direction: column;
@@ -157,4 +148,22 @@ li {
   float: right;
   margin-left: 10%;
   background-color: #4f9fe9;
+}
+.center-bot {
+  display: flex;
+  align-items: center;
+}
+.send-chat {
+  font-size: var(--h2-font-size);
+  margin-left: 20px;
+}
+.typing-input {
+  width: 100%;
+  background-color: var(--input-color);
+  color: var(--text-color);
+  border: 1px;
+  border-radius: 10px;
+  padding: 5px 15px;
+  font-family: var(--body-font);
+  outline: none;
 }
