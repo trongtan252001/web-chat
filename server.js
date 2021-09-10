@@ -1,4 +1,6 @@
 const express = require("express");
+const { uuid } = require('uuidv4');
+
 const app = express();
 app.use(express.static("public"));
 app.set("view engine", "ejs");
@@ -28,9 +30,9 @@ thongTinNguoiDung.push(new nguoiDung("h12", "123"));
 thongTinNguoiDung.push(new nguoiDung("h123", "123"));
 thongTinNguoiDung.push(new nguoiDung("Hau", "123"));
 io.on("connection", (socket) => {
-  socket.on('user-online',username =>{
-      userOnline(username,socket);
-   });
+  socket.on("user-online", (username) => {
+    userOnline(username, socket);
+  });
   socket.on("dangKy", (data) => {
     dangKy(data.name, data.password, socket);
   });
@@ -40,50 +42,129 @@ io.on("connection", (socket) => {
   socket.on("search", (data) => {
     searchFriend(data, socket);
   });
-  socket.on('add-friend',data =>{
-    friendRequest(data,socket);
+  socket.on("add-friend", (data) => {
+    friendRequest(data, socket);
+  });
+  socket.on("delete-request-friend", (data) => {
+    deleteRequestFriend(data, socket);
+  });
+  socket.on('add-friend-accept',data =>{
+    addFriendAccept(data,socket);
   });
 });
-//gui loi moi ket ban 
-function friendRequest(data,socket) {
+// dong y loi moi ket ban
+function addFriendAccept(data,socket) {
+  var room = uuid();
+  for (var i = 0; i < thongTinNguoiDung.length; i++) {
+    if (thongTinNguoiDung[i].name === data.myName) {
+       thongTinNguoiDung[i].arrayFriend.push(new friend(data.friendName,room)); 
+       var array = thongTinNguoiDung[i].arrayFriendRequest;
+        for (let index = 0; index < array.length; index++) {
+          const element = array[index];
+          if (element.data.user === data.friendName) {
+            array.splice(index, 1);
+            socket.emit(
+              "notify-request-friend",
+              thongTinNguoiDung[i].arrayFriendRequest
+            );
+            console.log(thongTinNguoiDung[i].arrayFriend);
+            console.log('hang 1');
+            break;
+        }
+      }
+          
+    }
+  }
+  for (var i = 0; i < thongTinNguoiDung.length; i++) {
+    if (thongTinNguoiDung[i].name === data.friendName) {
+      thongTinNguoiDung[i].arrayFriend.push(new friend(data.myName,room)); 
+      console.log(thongTinNguoiDung[i].arrayFriend);
+
+      return;
+
+    }
+  }
+}
+//xoa loi moi ket ban
+//data: myName, friendName
+//element: data(user => nameFiend ,nameFiend => user ,date) ,status
+function deleteRequestFriend(data, socket) {
+  for (var i = 0; i < thongTinNguoiDung.length; i++) {
+    if (thongTinNguoiDung[i].name === data.myName) {
+      var array = thongTinNguoiDung[i].arrayFriendRequest;
+      for (let index = 0; index < array.length; index++) {
+        const element = array[index];
+        if (element.data.user === data.friendName) {
+          array.splice(index, 1);
+          socket.emit(
+            "notify-request-friend",
+            thongTinNguoiDung[i].arrayFriendRequest
+          );
+    
+          return;
+        }
+      }
+    }
+  }
+}
+//gui loi moi ket ban
+function friendRequest(data, socket) {
   var name = data.nameFiend;
   for (let index = 0; index < thongTinNguoiDung.length; index++) {
-     if(thongTinNguoiDung[index].name === name && !checkFriendRequest(name,data.user)){
-      thongTinNguoiDung[index].arrayFriendRequest.push({data:data,status:true});
-      io.to(thongTinNguoiDung[index].id).emit('notify-request-friend',thongTinNguoiDung[index].arrayFriendRequest);
+    if (
+      thongTinNguoiDung[index].name === name &&
+      !checkFriendRequest(name, data.user)
+    ) {
+      thongTinNguoiDung[index].arrayFriendRequest.push({
+        data: data,
+        status: true,
+      });
+      io.to(thongTinNguoiDung[index].id).emit(
+        "notify-request-friend",
+        thongTinNguoiDung[index].arrayFriendRequest
+      );
       return;
-     }
+    }
   }
-  
 }
-
-// kem tra xem da gui loi moi ket ban chua
-function checkFriendRequest(name,user) {
+//lay id nguoi dung
+function getIdUser(name) {
   for (let index = 0; index < thongTinNguoiDung.length; index++) {
-    if(thongTinNguoiDung[index].name === name){
+    if (thongTinNguoiDung[index].name === name) {
+      return thongTinNguoiDung[index].id;
+    }
+  }
+  return "";
+}
+// kem tra xem da gui loi moi ket ban chua
+function checkFriendRequest(name, user) {
+  for (let index = 0; index < thongTinNguoiDung.length; index++) {
+    if (thongTinNguoiDung[index].name === name) {
       var array = thongTinNguoiDung[index].arrayFriendRequest;
       for (let index = 0; index < array.length; index++) {
         const element = array[index];
-        if(element.data.user === user){
+        if (element.data.user === user) {
           return true;
         }
       }
-     
     }
- }
- return false;
+  }
+  return false;
 }
 
 // user vao web (sang online)
-function userOnline(name,socket) {
+function userOnline(name, socket) {
   for (let index = 0; index < thongTinNguoiDung.length; index++) {
-    if(thongTinNguoiDung[index].name === name){
-     thongTinNguoiDung[index].id = socket.id;
-     socket.emit('notify-request-friend',thongTinNguoiDung[index].arrayFriendRequest);
+    if (thongTinNguoiDung[index].name === name) {
+      thongTinNguoiDung[index].id = socket.id;
+      socket.emit(
+        "notify-request-friend",
+        thongTinNguoiDung[index].arrayFriendRequest
+      );
 
-     return;
+      return;
     }
- }
+  }
 }
 
 // tiem kiem nguoi dung de ket ban
@@ -103,6 +184,13 @@ function nguoiDung(name, password) {
   this.password = password;
   this.id = "";
   this.arrayFriendRequest = [];
+  this.arrayFriend = [];
+}
+
+function friend(name,room) {
+  this.name = name;
+  this.room = room;
+  this.arrayMess = [];
 }
 function dangKy(name, password, socket) {
   for (var index = 0; index < thongTinNguoiDung.length; index++) {
@@ -126,5 +214,3 @@ function dangNhap(name, password, socket) {
   }
   socket.emit("dang-nhap-that-bai", name);
 }
-
-

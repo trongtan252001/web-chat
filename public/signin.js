@@ -9,7 +9,7 @@ function dangNhap() {
   }
 }
 io.on("dang-nhap-thanh-cong", (name) => {
-  window.location = "/home?n="+name;
+  window.location = "/home?n=" + name;
 });
 io.on("dang-nhap-that-bai", (name) => {
   alert("dang nhap That bai");
