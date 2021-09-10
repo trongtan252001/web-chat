@@ -22,3 +22,9 @@ io.on("getValuesSearch", (arr) => {
     );
   }
 });
+//notifications
+function fnActiveToggle() {
+  var iconNoti = document.getElementById("notify-icon");
+  var modalNoti = document.getElementById("modal-notification");
+  modalNoti.classList.toggle("acc");
+}
