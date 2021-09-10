@@ -158,6 +158,7 @@ li {
   height: 20px;
   background-color: red;
   text-align: center;
+  display: none;
 }
 
 .icon > i {
@@ -303,6 +304,7 @@ li {
   height: 300px;
   position: absolute;
   top: 60px;
+  display: none;
   right: 90px;
   z-index: 9;
   background-color: #242526;
