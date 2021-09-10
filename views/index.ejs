@@ -5,34 +5,110 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>App chat</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <script src="socket.io/socket.io.js"></script>
 
     <script src="index.js"></script>
 </head>
 <body>
-    <div class="container-fluid margin-top">
+    <div class="nav">
+        <div class="search-name" id="acticve-icon">
+            <i class="uil uil-arrow-left arrow-icon" ></i>
+            <input  id="myInput"  class="search-input" name="search" placeholder="Search..." onclick = "searchFriend()"  onkeyup="search()">
+            <i class="uil uil-search search-icon"></i>
+        </div>
+        <div class="header">
+            <h2 class="header-title" id="name-login">
+                Nguyen Van A
+            </h2>
+
+        </div>
+        <div class="list-icon">
+            <div class="icon">
+                <i class="uil uil-comment-alt-message"></i>
+                <span id="n-mes" class="num">2</span>
+            </div>
+            <div class="icon">
+                <i class="uil uil-bell"></i>
+                <span id="n-bell" class="num">2</span>
+            </div>
+            <div class="icon">
+                <i class="uil uil-signout"></i>
+            </div>
+        </div>
+       <div class="modal-noti">
+           <h3 class="title-modal-noti">
+               Thông báo
+           </h3>
+           <div class="data-modal-noti">
+               <ul>
+                   <li class="item-noti">
+                       <img src="images/user.png" alt="" class="img-noti">
+                       <span class="info-noti">Linh đã gửi lời mời</span>
+                       <button class="button cn">Chấp nhận</button>
+                       <button class="button dl">Xoá</button>
+                   </li>
+               </ul>
+           </div>
+       </div>
+    </div>
+    <div class="container-fluid margin-container">
+
         <div class="row">
             <div class="col-sm-3 left">
                 <div class="header-left">
-                    <div class="header">
-                        <h2 class="header-title">
-                            Message
-                        </h2>
-                        <div class="add-item" >
-                            <i class="uil uil-plus header-icon"></i>
-                        </div>
-                    </div>
-
-                    <div class="search-name" id="acticve-icon">
-                        <i class="uil uil-arrow-left arrow-icon" ></i>
-                        <input  id="myInput"  class="search-input" name="search" placeholder="Search..." onclick = "searchFriend()"  onkeyup="search()">
-                        <i class="uil uil-search search-icon"></i>
-                    </div>
                     <div class="left-content">
                         <ul class="list-items">
+                            <li class="item">
+                                <h3 class="title-item">Linh</h3>
+                                <p class="subtitle-item">Linh typing..</p>
+                            </li>
+                            <li class="item">
+                                <h3 class="title-item">Hung</h3>
+                                <p class="subtitle-item">Andy typing</p>
+                            </li>
+                            <li class="item">
+                                <h3 class="title-item">Linh</h3>
+                                <p class="subtitle-item">Linh typing..</p>
+                            </li>
+                            <li class="item">
+                                <h3 class="title-item">Hung</h3>
+                                <p class="subtitle-item">Andy typing</p>
+                            </li>
+                            <li class="item">
+                                <h3 class="title-item">Linh</h3>
+                                <p class="subtitle-item">Linh typing..</p>
+                            </li>
+                            <li class="item">
+                                <h3 class="title-item">Hung</h3>
+                                <p class="subtitle-item">Andy typing</p>
+                            </li>
+                            <li class="item">
+                                <h3 class="title-item">Linh</h3>
+                                <p class="subtitle-item">Linh typing..</p>
+                            </li>
+                            <li class="item">
+                                <h3 class="title-item">Hung</h3>
+                                <p class="subtitle-item">Andy typing</p>
+                            </li>
+                            <li class="item">
+                                <h3 class="title-item">Linh</h3>
+                                <p class="subtitle-item">Linh typing..</p>
+                            </li>
+                            <li class="item">
+                                <h3 class="title-item">Hung</h3>
+                                <p class="subtitle-item">Andy typing</p>
+                            </li>
+                            <li class="item">
+                                <h3 class="title-item">Linh</h3>
+                                <p class="subtitle-item">Linh typing..</p>
+                            </li>
+                            <li class="item">
+                                <h3 class="title-item">Hung</h3>
+                                <p class="subtitle-item">Andy typing</p>
+                            </li>
                             <li class="item">
                                 <h3 class="title-item">Linh</h3>
                                 <p class="subtitle-item">Linh typing..</p>
@@ -45,11 +121,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-9">
-                <div class="sign-out">
-                    <h3 id="name-login">Nguyen Van A</h3>
-                    <i class="uil uil-signout"></i>
-                </div>
+            <div class="col-sm-6">
+
                 <div class="center">
                     <div class="center-top">
                         <div class="inf-receiver">
@@ -94,6 +167,91 @@
 
                 </div>
             </div>
+            <div class="col-sm-3">
+                <div class="right">
+                    <div class="header-right">
+                        <h4 class="right-title">Người liên hệ</h4>
+                    </div>
+                    <div class="list-data">
+                        <ul class="list-status">
+                            <li class="item-status">
+                                <div class="user-ava">
+                                    <div>
+                                        <img src="images/user.png" alt="" class="img-friend">
+                                        <span class="status"></span>
+                                    </div>
+                                </div>
+                                <div class="info-status">
+                                    <h3>Linh</h3>
+                                    <p>Linh typing..</p>
+                                </div>
+                            </li>
+                            <li class="item-status">
+                                <div class="user-ava">
+                                    <div>
+                                        <img src="images/user.png" alt="" class="img-friend">
+                                        <span class="status"></span>
+                                    </div>
+                                </div>
+                                <div class="info-status">
+                                    <h3>Linh</h3>
+                                    <p>Linh typing..</p>
+                                </div>
+                            </li>
+                            <li class="item-status">
+                                <div class="user-ava">
+                                    <div>
+                                        <img src="images/user.png" alt="" class="img-friend">
+                                        <span class="status"></span>
+                                    </div>
+                                </div>
+                                <div class="info-status">
+                                    <h3>Linh</h3>
+                                    <p>Linh typing..</p>
+                                </div>
+                            </li>
+                            <li class="item-status">
+                                <div class="user-ava">
+                                    <div>
+                                        <img src="images/user.png" alt="" class="img-friend">
+                                        <span class="status"></span>
+                                    </div>
+                                </div>
+                                <div class="info-status">
+                                    <h3>Linh</h3>
+                                    <p>Linh typing..</p>
+                                </div>
+                            </li>
+                            <li class="item-status">
+                                <div class="user-ava">
+                                    <div>
+                                        <img src="images/user.png" alt="" class="img-friend">
+                                        <span class="status"></span>
+                                    </div>
+                                </div>
+                                <div class="info-status">
+                                    <h3>Linh</h3>
+                                    <p>Linh typing..</p>
+                                </div>
+                            </li>
+                            <li class="item-status">
+                                <div class="user-ava">
+                                    <div>
+                                        <img src="images/user.png" alt="" class="img-friend">
+                                        <span class="status"></span>
+                                    </div>
+                                </div>
+                                <div class="info-status">
+                                    <h3>Linh</h3>
+                                    <p>Linh typing..</p>
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
 
           </div>
     </div>
