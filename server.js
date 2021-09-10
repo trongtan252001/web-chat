@@ -44,7 +44,7 @@ io.on("connection", (socket) => {
     friendRequest(data,socket);
   });
 });
-
+//gui loi moi ket ban 
 function friendRequest(data,socket) {
   var name = data.nameFiend;
   for (let index = 0; index < thongTinNguoiDung.length; index++) {
@@ -56,6 +56,8 @@ function friendRequest(data,socket) {
   }
   
 }
+
+// kem tra xem da gui loi moi ket ban chua
 function checkFriendRequest(name,user) {
   for (let index = 0; index < thongTinNguoiDung.length; index++) {
     if(thongTinNguoiDung[index].name === name){
@@ -71,6 +73,8 @@ function checkFriendRequest(name,user) {
  }
  return false;
 }
+
+// user vao web (sang online)
 function userOnline(name,socket) {
   for (let index = 0; index < thongTinNguoiDung.length; index++) {
     if(thongTinNguoiDung[index].name === name){
@@ -81,6 +85,8 @@ function userOnline(name,socket) {
     }
  }
 }
+
+// tiem kiem nguoi dung de ket ban
 function searchFriend(name, socket) {
   var arr = [];
   for (let index = 0; index < thongTinNguoiDung.length; index++) {
@@ -91,6 +97,7 @@ function searchFriend(name, socket) {
   }
   socket.emit("getValuesSearch", arr);
 }
+
 function nguoiDung(name, password) {
   this.name = name;
   this.password = password;
