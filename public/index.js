@@ -51,14 +51,16 @@ io.on('notify-request-friend',array=>{
          '<img src="images/user.png" alt="" class="img-noti">'+
          '<span class="info-noti">'+element.data.user+' đã gửi lời mời</span>'+
          '<button class="button cn">Chấp nhận</button>'+
-         '<button class="button dl">Xoá</button>'+
+         '<button onclick ="" class="button dl">Xoá</button>'+
      '</li>'+
  '</ul>')
      
    }
   
 });
-
+function deleteRequest(name) {
+  alert(name)
+}
 
 function clickNotify() {
   var dis = document.getElementById('notify-contener').style.display+"";
