@@ -161,6 +161,7 @@ button:focus {
   height: 20px;
   background-color: red;
   text-align: center;
+  display: none;
 }
 
 .icon > i {
