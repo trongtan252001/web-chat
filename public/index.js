@@ -14,7 +14,7 @@ function searchFriend() {
 function search() {
   var input = document.getElementById("myInput");
   var filter = input.value.toLowerCase();
-  io.emit("search", {name:userName,friendName:filter});
+  io.emit("search", { name: userName, friendName: filter });
 }
 io.on("getValuesSearch", (arr) => {
   $(".left-content").html("");
@@ -26,7 +26,9 @@ io.on("getValuesSearch", (arr) => {
           '<h3 class="title-center">' +
           arr[index].name +
           "</h3>" +
-          '<div class="button" onclick="sendAddFriend(\''+arr[index].name+'\')">Thêm</div>' +
+          '<div class="button" onclick="sendAddFriend(\'' +
+          arr[index].name +
+          "')\">Thêm</div>" +
           "</div>" +
           "</div>"
       );
@@ -102,7 +104,11 @@ function addFriendAccept(name) {
 }
 function clickAddFriend(element) {
   var dis = document.getElementById(element).style.display + "";
+
   if (dis !== "block") {
+    if (element === "noti-contener") {
+      io.emit("seen-notify", userName);
+    }
     document.getElementById(element).style.display = "block";
   } else {
     document.getElementById(element).style.display = "none";
@@ -110,14 +116,14 @@ function clickAddFriend(element) {
 }
 io.on("reject-request-friend", (array) => {
   $(".data-modal-noti").html("");
-  if (array.length != 0) {
-    document.getElementById("n-thong-bao").style.display = "block";
-    $("#n-thong-bao").text(array.length);
-  } else {
-    document.getElementById("n-thong-bao").style.display = "none";
-  }
+
+  var count = 0;
   for (let index = array.length - 1; index >= 0; index--) {
     const element = array[index];
+    if (!element.data.staus) {
+      count++;
+      console.log(count);
+    }
     var date = new Date(element.data.time);
     $(".data-modal-noti").append(
       '<li class="item-noti">' +
@@ -145,5 +151,11 @@ io.on("reject-request-friend", (array) => {
         "</div>" +
         "</li>"
     );
+  }
+  if (count != 0) {
+    document.getElementById("n-thong-bao").style.display = "block";
+    $("#n-thong-bao").text(array.length);
+  } else {
+    document.getElementById("n-thong-bao").style.display = "none";
   }
 });
