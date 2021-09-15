@@ -97,7 +97,7 @@ io.on("reject-request-friend", (array) => {
   } else {
     document.getElementById("n-thong-bao").style.display = "none";
   }
-  for (let index = 0; index < array.length; index++) {
+  for (let index = array.length-1; index >= 0; index--) {
     const element = array[index];
     var date = new Date(element.data.time);
     $(".data-modal-noti").append(
