@@ -21,18 +21,21 @@ io.on("getValuesSearch", (arr) => {
   for (let index = 0; index < arr.length; index++) {
     if (arr[index] !== userName) {
       $(".left-content").append(
-        '<div class="item-search" onclick="sendAddFriend(\'' +
+        '<div class="list-items">' +
+          '<div class="item-search">' +
+          ' <h3 class="title-center">' +
+          "title dai" +
+          "</h3>" +
+          '<div class="button" onclick="sendAddFriend(\'' +
           arr[index] +
-          "')\">" +
-          ' <h3 class="title-center"> ' +
-          arr[index] +
-          "</hh3>" +
+          "')>Thêm</div>" +
+          "</div>" +
           "</div>"
       );
     }
   }
 });
-
+// onclick="sendAddFriend(\''+arr[index]+''
 function sendAddFriend(name) {
   var d = new Date();
   io.emit("add-friend", { user: userName, nameFiend: name, date: d });
@@ -74,12 +77,19 @@ io.on("notify-request-friend", (array) => {
 
 function deleteRequestFriend(name) {
   var time = new Date();
-  io.emit("delete-request-friend", { myName: userName, friendName: name,time:time });
+  io.emit("delete-request-friend", {
+    myName: userName,
+    friendName: name,
+    time: time,
+  });
 }
 function addFriendAccept(name) {
   var time = new Date();
-
-  io.emit("add-friend-accept", { myName: userName, friendName: name ,time:time });
+  io.emit("add-friend-accept", {
+    myName: userName,
+    friendName: name,
+    time: time,
+  });
 }
 function clickAddFriend(element) {
   var dis = document.getElementById(element).style.display + "";
@@ -97,7 +107,7 @@ io.on("reject-request-friend", (array) => {
   } else {
     document.getElementById("n-thong-bao").style.display = "none";
   }
-  for (let index = array.length-1; index >= 0; index--) {
+  for (let index = array.length - 1; index >= 0; index--) {
     const element = array[index];
     var date = new Date(element.data.time);
     $(".data-modal-noti").append(
@@ -111,7 +121,18 @@ io.on("reject-request-friend", (array) => {
         element.mess +
         "</span>" +
         "</div>" +
-        '<span class="time">'+date.getHours()+'h '+date.getMinutes()+'p'+' '+date.getDate()+'/'+date.getMonth()+'/'+date.getFullYear()+'</span>' +
+        '<span class="time">' +
+        date.getHours() +
+        "h " +
+        date.getMinutes() +
+        "p" +
+        " " +
+        date.getDate() +
+        "/" +
+        date.getMonth() +
+        "/" +
+        date.getFullYear() +
+        "</span>" +
         "</div>" +
         "</li>"
     );

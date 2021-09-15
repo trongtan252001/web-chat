@@ -67,7 +67,16 @@ function addFriendAccept(data, socket) {
             "notify-request-friend",
             thongTinNguoiDung[i].arrayFriendRequest
           );
-
+          var addFriendAccept = getUser(data.friendName).arrayNotify;
+          addFriendAccept.push({
+            data: data,
+            status: true,
+            mess: "Đã chấp nhận lời mời của bạn",
+          });
+          io.to(getIdUser(data.friendName)).emit(
+            "reject-request-friend",
+            addFriendAccept
+          );
           break;
         }
       }

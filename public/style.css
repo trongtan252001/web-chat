@@ -377,3 +377,11 @@ button:focus {
   max-height: 320px;
   overflow: auto;
 }
+
+/* button them ben trai */
+.item-search {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* flex-direction: row; */
+}
