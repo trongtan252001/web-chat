@@ -14,21 +14,30 @@ function searchFriend() {
 function search() {
   var input = document.getElementById("myInput");
   var filter = input.value.toLowerCase();
-  io.emit("search", filter);
+  io.emit("search", {name:userName,friendName:filter});
 }
 io.on("getValuesSearch", (arr) => {
   $(".left-content").html("");
   for (let index = 0; index < arr.length; index++) {
-    if (arr[index] !== userName) {
+    if (arr[index].name !== userName && !arr[index].isFriend) {
       $(".left-content").append(
         '<div class="list-items">' +
           '<div class="item-search">' +
-          ' <h3 class="title-center">' +
-          "title dai" +
+          '<h3 class="title-center">' +
+          arr[index].name +
           "</h3>" +
-          '<div class="button" onclick="sendAddFriend(\'' +
-          arr[index] +
-          "')>Thêm</div>" +
+          '<div class="button" onclick="sendAddFriend(\''+arr[index].name+'\')">Thêm</div>' +
+          "</div>" +
+          "</div>"
+      );
+    }
+    if (arr[index].name !== userName && arr[index].isFriend) {
+      $(".left-content").append(
+        '<div class="list-items">' +
+          '<div class="item-search">' +
+          '<h3 class="title-center">' +
+          arr[index].name +
+          "</h3>" +
           "</div>" +
           "</div>"
       );

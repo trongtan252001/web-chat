@@ -196,17 +196,32 @@ function userOnline(name, socket) {
 }
 
 // tiem kiem nguoi dung de ket ban
-function searchFriend(name, socket) {
+function searchFriend(data, socket) {
   var arr = [];
   for (let index = 0; index < thongTinNguoiDung.length; index++) {
     var tenCuaMang = thongTinNguoiDung[index].name.toLowerCase();
-    if (tenCuaMang.startsWith(name)) {
-      arr.push(thongTinNguoiDung[index].name);
+    if (tenCuaMang.startsWith(data.friendName) && isFriend(data.name,thongTinNguoiDung[index].name)) {
+      arr.push({name:thongTinNguoiDung[index].name,isFriend: true});
+    }
+    if (tenCuaMang.startsWith(data.friendName) && !isFriend(data.name,thongTinNguoiDung[index].name)) {
+
+      arr.push({name:thongTinNguoiDung[index].name,isFriend: false});
+      // console.log("chua");
+
     }
   }
   socket.emit("getValuesSearch", arr);
 }
-
+function isFriend(MyName,friendName) {
+  var arrayFriend = getUser(MyName).arrayFriend;
+  for (let index = 0; index < arrayFriend.length; index++) {
+    const element = arrayFriend[index];
+    if(element.name === friendName){
+      return true;
+    }
+  }
+  return false;
+}
 function nguoiDung(name, password) {
   this.name = name;
   this.password = password;
