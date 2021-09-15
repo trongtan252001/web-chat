@@ -3,6 +3,9 @@ var urlParams = new URLSearchParams(window.location.search);
 var userName = urlParams.get("n");
 io.emit("user-online", userName);
 
+$(document).ready(function () {
+  $("#name-login").text(userName);
+});
 function searchFriend() {
   $(".left-content").html("");
   var searchName = document.getElementById("acticve-icon");
@@ -36,7 +39,7 @@ function sendAddFriend(name) {
 }
 
 io.on("notify-request-friend", (array) => {
-  $(".data-modal-noti").html("");
+  $(".data-modal-add").html("");
   if (array.length != 0) {
     document.getElementById("n-bell").style.display = "block";
     $("#n-bell").text(array.length);
@@ -46,35 +49,71 @@ io.on("notify-request-friend", (array) => {
   for (let index = array.length - 1; index >= 0; index--) {
     const element = array[index];
 
-    $(".data-modal-noti").append(
-      ' <li class="item-noti">'+
-      '<img src="images/user.png" alt="" class="img-noti">'+
-      '<div>'+
-          '<div class="over-text">'+
-              '<span class="info-noti">Bạn có lời mời kết bạn từ '+element.data.user +'</span>'+
-          '</div>'+
-          '<div>'+
-              '<button onclick ="addFriendAccept(\''+element.data.user+'\')"  class="button cn">Chấp nhận</button>'+
-              '<button onclick ="deleteRequestFriend(\''+element.data.user+'\')" class="button dl">Xoá</button>'+
-          '</div>'+
-      '</div>'+
-   '</li>'
+    $(".data-modal-add").append(
+      ' <li class="item-noti">' +
+        '<img src="images/user.png" alt="" class="img-noti">' +
+        "<div>" +
+        '<div class="over-text">' +
+        '<span class="info-noti">Bạn có lời mời kết bạn từ ' +
+        element.data.user +
+        "</span>" +
+        "</div>" +
+        "<div>" +
+        "<button onclick =\"addFriendAccept('" +
+        element.data.user +
+        '\')"  class="button cn">Chấp nhận</button>' +
+        "<button onclick =\"deleteRequestFriend('" +
+        element.data.user +
+        '\')" class="button dl">Xoá</button>' +
+        "</div>" +
+        "</div>" +
+        "</li>"
     );
   }
 });
 
 function deleteRequestFriend(name) {
-   io.emit('delete-request-friend',{myName:userName,friendName:name});
+  var time = new Date();
+  io.emit("delete-request-friend", { myName: userName, friendName: name,time:time });
 }
 function addFriendAccept(name) {
-  io.emit('add-friend-accept',{myName:userName,friendName:name});
+  var time = new Date();
+
+  io.emit("add-friend-accept", { myName: userName, friendName: name ,time:time });
 }
-function clickNotify() {
-  var dis = document.getElementById("notify-contener").style.display + "";
+function clickAddFriend(element) {
+  var dis = document.getElementById(element).style.display + "";
   if (dis !== "block") {
-    document.getElementById("notify-contener").style.display = "block";
+    document.getElementById(element).style.display = "block";
   } else {
-    document.getElementById("notify-contener").style.display = "none";
+    document.getElementById(element).style.display = "none";
   }
 }
-
+io.on("reject-request-friend", (array) => {
+  $(".data-modal-noti").html("");
+  if (array.length != 0) {
+    document.getElementById("n-thong-bao").style.display = "block";
+    $("#n-thong-bao").text(array.length);
+  } else {
+    document.getElementById("n-thong-bao").style.display = "none";
+  }
+  for (let index = 0; index < array.length; index++) {
+    const element = array[index];
+    var date = new Date(element.data.time);
+    $(".data-modal-noti").append(
+      '<li class="item-noti">' +
+        '<img src="images/user.png" alt="" class="img-noti">' +
+        "<div>" +
+        ' <div class="over-text">' +
+        '<span class="info-noti">' +
+        element.data.myName +
+        " " +
+        element.mess +
+        "</span>" +
+        "</div>" +
+        '<span class="time">'+date.getHours()+'h '+date.getMinutes()+'p'+' '+date.getDate()+'/'+date.getMonth()+'/'+date.getFullYear()+'</span>' +
+        "</div>" +
+        "</li>"
+    );
+  }
+});
