@@ -62,7 +62,6 @@ function seenNotify(name, socket) {
     const element = array[index];
     if (element.status) {
       socket.emit("reject-request-friend", array);
-      console.log(array);
       return;
     }
     element.status = true;
@@ -103,7 +102,7 @@ function addFriendAccept(data, socket) {
   for (var i = 0; i < thongTinNguoiDung.length; i++) {
     if (thongTinNguoiDung[i].name === data.friendName) {
       thongTinNguoiDung[i].arrayFriend.push(new friend(data.myName, room));
-      console.log(thongTinNguoiDung[i].arrayFriend);
+      // console.log(thongTinNguoiDung[i].arrayFriend);
 
       return;
     }
@@ -127,7 +126,7 @@ function deleteRequestFriend(data, socket) {
           var addFriendAccept = getUser(data.friendName).arrayNotify;
           addFriendAccept.push({
             data: data,
-            status: true,
+            status: false,
             mess: "Đã từ chối lời mời kết bạn",
           });
           io.to(getIdUser(data.friendName)).emit(
@@ -216,17 +215,18 @@ function userOnline(name, socket) {
 // tiem kiem nguoi dung de ket ban
 function searchFriend(data, socket) {
   var arr = [];
+
   for (let index = 0; index < thongTinNguoiDung.length; index++) {
     var tenCuaMang = thongTinNguoiDung[index].name.toLowerCase();
     if (
       tenCuaMang.startsWith(data.friendName) &&
-      isFriend(data.name, thongTinNguoiDung[index].name)
+      (isFriend(data.name, thongTinNguoiDung[index].name) || checkFriendRequest(thongTinNguoiDung[index].name,data.name))
     ) {
       arr.push({ name: thongTinNguoiDung[index].name, isFriend: true });
     }
     if (
       tenCuaMang.startsWith(data.friendName) &&
-      !isFriend(data.name, thongTinNguoiDung[index].name)
+      (!isFriend(data.name, thongTinNguoiDung[index].name) && !checkFriendRequest(thongTinNguoiDung[index].name,data.name ))
     ) {
       arr.push({ name: thongTinNguoiDung[index].name, isFriend: false });
       // console.log("chua");
@@ -234,6 +234,8 @@ function searchFriend(data, socket) {
   }
   socket.emit("getValuesSearch", arr);
 }
+
+
 function isFriend(MyName, friendName) {
   var arrayFriend = getUser(MyName).arrayFriend;
   for (let index = 0; index < arrayFriend.length; index++) {

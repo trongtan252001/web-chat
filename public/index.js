@@ -14,7 +14,7 @@ function searchFriend() {
 function search() {
   var input = document.getElementById("myInput");
   var filter = input.value.toLowerCase();
-  io.emit("search", { name: userName, friendName: filter });
+  io.emit("search", { name: userName, friendName: filter  });
 }
 io.on("getValuesSearch", (arr) => {
   $(".left-content").html("");
@@ -26,9 +26,9 @@ io.on("getValuesSearch", (arr) => {
           '<h3 class="title-center">' +
           arr[index].name +
           "</h3>" +
-          '<div class="button" onclick="sendAddFriend(\'' +
+          '<div class="button" id = "button'+index+'"  onclick="sendAddFriend(\'' +
           arr[index].name +
-          "')\">Thêm</div>" +
+          "',\'"+index+"\')\">Thêm</div>" +
           "</div>" +
           "</div>"
       );
@@ -47,9 +47,12 @@ io.on("getValuesSearch", (arr) => {
   }
 });
 // onclick="sendAddFriend(\''+arr[index]+''
-function sendAddFriend(name) {
+function sendAddFriend(name,id) {
   var d = new Date();
   io.emit("add-friend", { user: userName, nameFiend: name, date: d });
+  document.getElementById('button'+id).style.visibility = 'hidden';
+  // document.getElementById("button"+id+"").style.display = "none";
+
 }
 
 io.on("notify-request-friend", (array) => {
@@ -118,11 +121,12 @@ io.on("reject-request-friend", (array) => {
   $(".data-modal-noti").html("");
 
   var count = 0;
+
   for (let index = array.length - 1; index >= 0; index--) {
     const element = array[index];
-    if (!element.data.staus) {
+
+    if (!element.status) {
       count++;
-      console.log(count);
     }
     var date = new Date(element.data.time);
     $(".data-modal-noti").append(
@@ -154,7 +158,7 @@ io.on("reject-request-friend", (array) => {
   }
   if (count != 0) {
     document.getElementById("n-thong-bao").style.display = "block";
-    $("#n-thong-bao").text(array.length);
+    $("#n-thong-bao").text(count);
   } else {
     document.getElementById("n-thong-bao").style.display = "none";
   }
