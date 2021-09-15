@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <script src="socket.io/socket.io.js"></script>
 
     <script src="index.js"></script>
@@ -20,9 +22,8 @@
             <i class="uil uil-search search-icon"></i>
         </div>
         <div class="header">
-            <h2 class="header-title" id="name-login">
-                Nguyen Van A
-            </h2>
+            <h3 class="header-title" id="name-login">
+            </h3>
 
         </div>
         <div class="list-icon">
@@ -31,13 +32,54 @@
                 <span id="n-mes" class="num">2</span>
             </div>
             <div class="icon">
-                <i class="uil uil-bell" onclick="clickNotify()"></i>
-                <span id="n-bell" class="num">2</span>
-                <div class="modal-noti" id="notify-contener">
+                <i class="uil uil-bell" onclick="clickAddFriend('noti-contener')"></i>
+                <span id="n-thong-bao" class="num">2</span>
+                <div class="modal-noti" id="noti-contener">
                     <h3 class="title-modal-noti">
                         Thông báo
                     </h3>
                     <div class="data-modal-noti">
+                        <ul>
+                            <li class="item-noti">
+                                <img src="images/user.png" alt="" class="img-noti">
+                                 <div>
+                                    <div class="over-text">
+                                        <span class="info-noti">Linh đã gửi lời mời kết bạn</span>
+                                    </div>
+                                    <span class="time">7:50am</span>
+                                 </div>
+                            </li>
+                            <li class="item-noti">
+                                <img src="images/user.png" alt="" class="img-noti">
+                                 <div>
+                                    <div class="over-text">
+                                        <span class="info-noti">Linh đã gửi lời mời kết bạn</span>
+                                    </div>
+                                    <span class="time">7:50am</sp>
+                                 </div>
+                            </li>
+                            <li class="item-noti">
+                                <img src="images/user.png" alt="" class="img-noti">
+                                 <div>
+                                    <div class="over-text">
+                                        <span class="info-noti">Linh đã gửi lời mời kết bạn</span>
+                                    </div>
+                                    <span class="time">7:50am</span>
+                                 </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+            <div class="icon">
+                <i class="uil uil-user-plus" onclick="clickAddFriend('add-contener')"></i>
+                <span id="n-bell" class="num">2</span>
+                <div class="modal-noti" id="add-contener">
+                    <h3 class="title-modal-noti">
+                        Lời mời kết bạn
+                    </h3>
+                    <div class="data-modal-add">
                         <ul>
                             <li class="item-noti">
                                 <img src="images/user.png" alt="" class="img-noti">

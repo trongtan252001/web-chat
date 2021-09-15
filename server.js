@@ -1,5 +1,5 @@
 const express = require("express");
-const { uuid } = require('uuidv4');
+const { uuid } = require("uuidv4");
 
 const app = express();
 app.use(express.static("public"));
@@ -48,40 +48,37 @@ io.on("connection", (socket) => {
   socket.on("delete-request-friend", (data) => {
     deleteRequestFriend(data, socket);
   });
-  socket.on('add-friend-accept',data =>{
-    addFriendAccept(data,socket);
+  socket.on("add-friend-accept", (data) => {
+    addFriendAccept(data, socket);
   });
 });
 // dong y loi moi ket ban
-function addFriendAccept(data,socket) {
+function addFriendAccept(data, socket) {
   var room = uuid();
   for (var i = 0; i < thongTinNguoiDung.length; i++) {
     if (thongTinNguoiDung[i].name === data.myName) {
-       thongTinNguoiDung[i].arrayFriend.push(new friend(data.friendName,room)); 
-       var array = thongTinNguoiDung[i].arrayFriendRequest;
-        for (let index = 0; index < array.length; index++) {
-          const element = array[index];
-          if (element.data.user === data.friendName) {
-            array.splice(index, 1);
-            socket.emit(
-              "notify-request-friend",
-              thongTinNguoiDung[i].arrayFriendRequest
-            );
-            console.log(thongTinNguoiDung[i].arrayFriend);
-            console.log('hang 1');
-            break;
+      thongTinNguoiDung[i].arrayFriend.push(new friend(data.friendName, room));
+      var array = thongTinNguoiDung[i].arrayFriendRequest;
+      for (let index = 0; index < array.length; index++) {
+        const element = array[index];
+        if (element.data.user === data.friendName) {
+          array.splice(index, 1);
+          socket.emit(
+            "notify-request-friend",
+            thongTinNguoiDung[i].arrayFriendRequest
+          );
+
+          break;
         }
       }
-          
     }
   }
   for (var i = 0; i < thongTinNguoiDung.length; i++) {
     if (thongTinNguoiDung[i].name === data.friendName) {
-      thongTinNguoiDung[i].arrayFriend.push(new friend(data.myName,room)); 
+      thongTinNguoiDung[i].arrayFriend.push(new friend(data.myName, room));
       console.log(thongTinNguoiDung[i].arrayFriend);
 
       return;
-
     }
   }
 }
@@ -100,7 +97,16 @@ function deleteRequestFriend(data, socket) {
             "notify-request-friend",
             thongTinNguoiDung[i].arrayFriendRequest
           );
-    
+          var addFriendAccept = getUser(data.friendName).arrayNotify;
+          addFriendAccept.push({
+            data: data,
+            status: true,
+            mess: "Đã từ chối lời mời kết bạn",
+          });
+          io.to(getIdUser(data.friendName)).emit(
+            "reject-request-friend",
+            addFriendAccept
+          );
           return;
         }
       }
@@ -127,6 +133,16 @@ function friendRequest(data, socket) {
     }
   }
 }
+// search nguoi dung
+function getUser(name) {
+  for (let index = 0; index < thongTinNguoiDung.length; index++) {
+    if (thongTinNguoiDung[index].name === name) {
+      return thongTinNguoiDung[index];
+    }
+  }
+  return null;
+}
+
 //lay id nguoi dung
 function getIdUser(name) {
   for (let index = 0; index < thongTinNguoiDung.length; index++) {
@@ -185,9 +201,10 @@ function nguoiDung(name, password) {
   this.id = "";
   this.arrayFriendRequest = [];
   this.arrayFriend = [];
+  this.arrayNotify = [];
 }
 
-function friend(name,room) {
+function friend(name, room) {
   this.name = name;
   this.room = room;
   this.arrayMess = [];
