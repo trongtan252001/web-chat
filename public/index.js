@@ -1,7 +1,6 @@
 var io = io("http://localhost:3000");
 var urlParams = new URLSearchParams(window.location.search);
 var userName = urlParams.get("n");
-
 io.emit("user-online", userName);
 
 function searchFriend() {
