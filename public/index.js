@@ -14,7 +14,7 @@ function searchFriend() {
 function search() {
   var input = document.getElementById("myInput");
   var filter = input.value.toLowerCase();
-  io.emit("search", { name: userName, friendName: filter  });
+  io.emit("search", { name: userName, friendName: filter });
 }
 io.on("getValuesSearch", (arr) => {
   $(".left-content").html("");
@@ -26,9 +26,13 @@ io.on("getValuesSearch", (arr) => {
           '<h3 class="title-center">' +
           arr[index].name +
           "</h3>" +
-          '<div class="button" id = "button'+index+'"  onclick="sendAddFriend(\'' +
+          '<div class="button" id = "button' +
+          index +
+          '"  onclick="sendAddFriend(\'' +
           arr[index].name +
-          "',\'"+index+"\')\">Thêm</div>" +
+          "','" +
+          index +
+          "')\">Thêm</div>" +
           "</div>" +
           "</div>"
       );
@@ -47,12 +51,11 @@ io.on("getValuesSearch", (arr) => {
   }
 });
 // onclick="sendAddFriend(\''+arr[index]+''
-function sendAddFriend(name,id) {
+function sendAddFriend(name, id) {
   var d = new Date();
   io.emit("add-friend", { user: userName, nameFiend: name, date: d });
-  document.getElementById('button'+id).style.visibility = 'hidden';
+  document.getElementById("button" + id).style.visibility = "hidden";
   // document.getElementById("button"+id+"").style.display = "none";
-
 }
 
 io.on("notify-request-friend", (array) => {
@@ -161,5 +164,31 @@ io.on("reject-request-friend", (array) => {
     $("#n-thong-bao").text(count);
   } else {
     document.getElementById("n-thong-bao").style.display = "none";
+  }
+});
+io.on("nguoi-lien-he", (thongTinNguoiDung) => {
+  var arrayFriend = thongTinNguoiDung.arrayFriend;
+  $(".list-status").html("");
+  console.log(thongTinNguoiDung);
+  for (let index = 0; index < arrayFriend.length; index++) {
+    const element = arrayFriend[index];
+    $(".list-status").append(
+      '<li class="item-status">' +
+        '<div class="user-ava">' +
+        " <div>" +
+        '<img src="images/user.png" alt="" class="img-friend">' +
+        '<span class="status"></span>' +
+        "</div>" +
+        "</div>" +
+        '<div class="info-status">' +
+        "<h3>" +
+        element.name +
+        "</h3>" +
+        "<p>" +
+        "Linh typing.." +
+        "</p>" +
+        "</div>" +
+        "</li>"
+    );
   }
 });

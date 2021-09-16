@@ -80,10 +80,20 @@ function addFriendAccept(data, socket) {
         const element = array[index];
         if (element.data.user === data.friendName) {
           array.splice(index, 1);
+          //   searchFriendForName(
+          //     thongTinNguoiDung[i].name,
+          //     data.friendName
+          //   ).arrayMess.push({
+          //     name: data.friendName,
+          //     mess: "Các bạn đã là bạn bè với nhau",
+          //     status: false,
+          //   });
           socket.emit(
             "notify-request-friend",
             thongTinNguoiDung[i].arrayFriendRequest
           );
+
+          socket.emit("nguoi-lien-he", thongTinNguoiDung[i]);
           var addFriendAccept = getUser(data.friendName).arrayNotify;
           addFriendAccept.push({
             data: data,
@@ -102,12 +112,41 @@ function addFriendAccept(data, socket) {
   for (var i = 0; i < thongTinNguoiDung.length; i++) {
     if (thongTinNguoiDung[i].name === data.friendName) {
       thongTinNguoiDung[i].arrayFriend.push(new friend(data.myName, room));
+      console.log(
+        searchFriendForName(data.friendName, thongTinNguoiDung[i].name)
+      );
+      //   searchFriendForName(
+      //     data.friendName,
+      //     thongTinNguoiDung[i].name
+      //   ).arrayMess.push({
+      //     name: thongTinNguoiDung[i].name,
+      //     mess: "Các bạn đã là bạn bè với nhau",
+      //     status: false,
+      //   });
+
+      io.to(thongTinNguoiDung[i].id).emit(
+        "nguoi-lien-he",
+        thongTinNguoiDung[i]
+      );
+
       // console.log(thongTinNguoiDung[i].arrayFriend);
 
       return;
     }
   }
 }
+//search ban be
+function searchFriendForName(name, nameFriend) {
+  var arrayFriend = getUser(name).arrayFriend;
+  for (let index = 0; index < arrayFriend.length; index++) {
+    const element = arrayFriend[index];
+    if (element.name === nameFriend) {
+      return element;
+    }
+  }
+  return null;
+}
+
 //xoa loi moi ket ban
 //data: myName, friendName
 //element: data(user => nameFiend ,nameFiend => user ,date) ,status
@@ -199,6 +238,7 @@ function userOnline(name, socket) {
   for (let index = 0; index < thongTinNguoiDung.length; index++) {
     if (thongTinNguoiDung[index].name === name) {
       thongTinNguoiDung[index].id = socket.id;
+      socket.emit("nguoi-lien-he", thongTinNguoiDung[index]);
       socket.emit(
         "notify-request-friend",
         thongTinNguoiDung[index].arrayFriendRequest
@@ -220,13 +260,15 @@ function searchFriend(data, socket) {
     var tenCuaMang = thongTinNguoiDung[index].name.toLowerCase();
     if (
       tenCuaMang.startsWith(data.friendName) &&
-      (isFriend(data.name, thongTinNguoiDung[index].name) || checkFriendRequest(thongTinNguoiDung[index].name,data.name))
+      (isFriend(data.name, thongTinNguoiDung[index].name) ||
+        checkFriendRequest(thongTinNguoiDung[index].name, data.name))
     ) {
       arr.push({ name: thongTinNguoiDung[index].name, isFriend: true });
     }
     if (
       tenCuaMang.startsWith(data.friendName) &&
-      (!isFriend(data.name, thongTinNguoiDung[index].name) && !checkFriendRequest(thongTinNguoiDung[index].name,data.name ))
+      !isFriend(data.name, thongTinNguoiDung[index].name) &&
+      !checkFriendRequest(thongTinNguoiDung[index].name, data.name)
     ) {
       arr.push({ name: thongTinNguoiDung[index].name, isFriend: false });
       // console.log("chua");
@@ -234,7 +276,6 @@ function searchFriend(data, socket) {
   }
   socket.emit("getValuesSearch", arr);
 }
-
 
 function isFriend(MyName, friendName) {
   var arrayFriend = getUser(MyName).arrayFriend;
