@@ -195,29 +195,14 @@
                     <div class="frame-chat style-1" id="out">
                         <div class="chat-list" >
 
-                            <div class="chat bubble-left">Tin nhan 1</div>
-                               <div class="chat bubble-right">Tin nhan 2</div>
-                            <div class="chat bubble-left">Tin nhan 3</div>
-                            <div class="chat bubble-right">Tin nhan 4</div>
-                            <div class="chat bubble-right">Tin nhan 4</div>
-
-                            <div class="chat bubble-right">Tin nhan 4</div>
-                            <div class="chat bubble-right">Tin nhan 4</div>
-                            <div class="chat bubble-right">Tin nhan 4</div>
-
-                            <div class="chat bubble-right">Tin nhan 4</div>
-                            <div class="chat bubble-right">Tin nhan 4</div><div class="chat bubble-right">Tin nhan 4</div>
-
-                            <div class="chat bubble-right">Tin nhan 4</div>
-                            <div class="chat bubble-right">Tin nhan 4</div><div class="chat bubble-right">Tin nhan 4</div>
-
-                            <div class="chat bubble-right">Tin nhan 4</div>
-                            <div class="chat bubble-right">Tin nhan 4</div>
+                            <!-- <div class="chat bubble-left">Tin nhan 1</div>
+                               <div class="chat bubble-right">Tin nhan 2</div> -->
+                            
                         </div>
                     </div>
                     <div class="center-bot">
-                        <input class="typing-input" name="search" placeholder="Aa" >
-                        <div class="send-chat">
+                        <input id="input-mess" class="typing-input" name="search" placeholder="Aa" >
+                        <div onclick="clickSendMess()" id="send-mess" class="send-chat">
                             <i class="uil uil-message"></i>
                         </div>
                     </div>
@@ -231,7 +216,7 @@
                     </div>
                     <div class="list-data">
                         <ul class="list-status">
-                            <!-- <li class="item-status">
+                             <!-- <li onclick="clickItemLienHe({name:})" class="item-status">
                                 <div class="user-ava">
                                     <div>
                                         <img src="images/user.png" alt="" class="img-friend">
@@ -242,8 +227,8 @@
                                     <h3>Linh</h3>
                                     <p>Linh typing..</p>
                                 </div>
-                            </li>
-                            <li class="item-status">
+                            </li> -->
+                           <!-- <li class="item-status">
                                 <div class="user-ava">
                                     <div>
                                         <img src="images/user.png" alt="" class="img-friend">

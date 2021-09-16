@@ -1,4 +1,5 @@
 const express = require("express");
+const { get } = require("http");
 const { uuid } = require("uuidv4");
 
 const app = express();
@@ -54,7 +55,83 @@ io.on("connection", (socket) => {
   socket.on("seen-notify", (name) => {
     seenNotify(name, socket);
   });
+
+  socket.on('join-chat-room',data =>{
+    socket.join(data.room); 
+    joinChatRoom(data,socket);
+
+  });
+  socket.on('send-mess',data => {
+    senMess(data,socket);
+  });
+
+  socket.on('update-new-mess', data =>{
+     updateNewMess(data,socket);
+  });
 });
+
+//gui du lieu mess ve
+//data => {name:name,room:room}
+function joinChatRoom(data,socket) {
+  var friend = searchIndexFriend(data.name,data.nameFriend);
+  socket.emit('cap-nhap-list-mess',friend.nguoiDung);
+}
+
+// cap nhat nguoi gui tin nhan moi nhat
+function updateNewMess(data,socket) {
+
+  // cap nhat cho ban
+  var nguoiDung = getUser(data.nameFiend).arrayFriend;
+  var friend = searchIndexFriend(data.nameFiend,data.name);
+  
+  nguoiDung.splice(friend.index,1);
+  nguoiDung.unshift(friend.nguoiDung);
+  var thongTinNguoi =getUser(data.nameFiend);
+  io.to(thongTinNguoi.id).emit("nguoi-lien-he", thongTinNguoi);
+
+ //cap nhat chinh no
+ var nguoiDung2 = getUser(data.name).arrayFriend;
+ var friend2 = searchIndexFriend(data.name,data.nameFiend);
+ 
+ nguoiDung2.splice(friend2.index,1);
+ nguoiDung2.unshift(friend2.nguoiDung);
+ 
+  var thongTinNguoi2 =getUser(data.name);
+  io.to(thongTinNguoi2.id).emit("nguoi-lien-he", thongTinNguoi2);
+
+
+  
+}
+// lay vi tri cua ban be 
+function searchIndexFriend(name, nameFriend) {
+  var arrayFriend = getUser(name).arrayFriend;
+  for (let index = 0; index < arrayFriend.length; index++) {
+    const element = arrayFriend[index];
+    if (element.name === nameFriend) {
+      return {nguoiDung:element, index:index};
+    }
+  }
+  return null;
+}
+// nhan tin
+//data => {name: userName,mess:mess,room:room,time:new Date()}
+function senMess(data,socket) {
+  searchFriendForName(data.name,data.userFriend).arrayMess.push({
+    name: data.name,
+    mess: data.mess,
+    status: false,
+    date: data.time
+  });
+  searchFriendForName(data.userFriend,data.name).arrayMess.push({
+    name: data.name,
+    mess: data.mess,
+    status: false,
+    date: data.time
+  });
+ 
+  io.sockets.in(data.room).emit('nhan-tin-nhan',data);
+
+}
 //da xem thong bao
 function seenNotify(name, socket) {
   var array = getUser(name).arrayNotify;
@@ -78,8 +155,8 @@ function addFriendAccept(data, socket) {
     if (thongTinNguoiDung[i].name === data.myName) {
       var friends = new friend(data.friendName, room);
       friends.arrayMess.push({
-        name: data.friendName,
-          mess: "Các bạn đã là bạn bè với nhau",
+        name: data.myName,
+          mess: "Mình đồng ý chúng ta là bạn",
           status: false,
           date: new Date()
       });
@@ -100,7 +177,7 @@ function addFriendAccept(data, socket) {
           addFriendAccept.push({
             data: data,
             status: false,
-            mess: "Đã chấp nhận lời mời của bạn",
+            mess: "Mình đồng ý chúng ta là bạn",
           });
           io.to(getIdUser(data.friendName)).emit(
             "reject-request-friend",
@@ -130,7 +207,6 @@ function addFriendAccept(data, socket) {
         thongTinNguoiDung[i]
       );
 
-      // console.log(thongTinNguoiDung[i].arrayFriend);
 
       return;
     }
@@ -139,12 +215,10 @@ function addFriendAccept(data, socket) {
 
 //search ban be
 function searchFriendForName(name, nameFriend) {
-  console.log("name: " + name + " namefriend: " + nameFriend);
   var arrayFriend = getUser(name).arrayFriend;
   for (let index = 0; index < arrayFriend.length; index++) {
     const element = arrayFriend[index];
     if (element.name === nameFriend) {
-      console.log('serch',element);
       return element;
     }
   }
@@ -275,7 +349,6 @@ function searchFriend(data, socket) {
       !checkFriendRequest(thongTinNguoiDung[index].name, data.name)
     ) {
       arr.push({ name: thongTinNguoiDung[index].name, isFriend: false });
-      // console.log("chua");
     }
   }
   socket.emit("getValuesSearch", arr);
