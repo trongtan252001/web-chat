@@ -169,7 +169,6 @@ io.on("reject-request-friend", (array) => {
 io.on("nguoi-lien-he", (thongTinNguoiDung) => {
   var arrayFriend = thongTinNguoiDung.arrayFriend;
   $(".list-status").html("");
-  console.log(thongTinNguoiDung);
   for (let index = 0; index < arrayFriend.length; index++) {
     const element = arrayFriend[index];
     $(".list-status").append(
@@ -184,8 +183,8 @@ io.on("nguoi-lien-he", (thongTinNguoiDung) => {
         "<h3>" +
         element.name +
         "</h3>" +
-        "<p>" +
-        "Linh typing.." +
+        "<p>" 
+        +element.arrayMess[element.arrayMess.length-1].mess+
         "</p>" +
         "</div>" +
         "</li>"
