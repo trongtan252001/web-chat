@@ -124,8 +124,10 @@ button:focus {
   font-size: var(--h3-font-size);
 }
 .inf-receiver {
-  margin-left: 15px;
-  margin-top: 15px;
+  padding-left: 15px;
+  padding-top: 15px;
+  padding-bottom: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .subtitle-item {
   margin-top: 10px;
@@ -143,6 +145,7 @@ button:focus {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  visibility: hidden;
 }
 .list-icon {
   display: flex;
@@ -174,13 +177,9 @@ button:focus {
   margin-right: 20px;
 }
 .frame-chat {
+  margin-top: 25px;
   height: var(--height-fixed);
-  /* transform: rotate(180deg); */
   overflow: auto;
-}
-.center {
-  visibility: hidden;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .margin-top {
@@ -294,9 +293,14 @@ button:focus {
 }
 .info-status p {
   font-size: var(--small-font-size);
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.item-status:not(:first-child) {
-  padding: 10px 0px;
+.item-status {
+  padding: 10px 6px;
 }
 /* scrollbar  */
 .data-modal-noti::-webkit-scrollbar,

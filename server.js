@@ -72,6 +72,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("join-chat-room", (data) => {
+    socket.rooms = data.room;
     socket.join(data.room);
     joinChatRoom(data, socket);
   });
@@ -82,8 +83,17 @@ io.on("connection", (socket) => {
   socket.on("update-new-mess", (data) => {
     updateNewMess(data, socket);
   });
+  socket.on("sign-out", (name) => {
+    if (socket.name != null) {
+      dangXuatAndDangNhap(
+        socket.name,
+        { name: socket.name, status: false },
+        socket
+      );
+    }
+  });
 });
-//dang xuat
+//dang xuat data  { name: socket.name, status: true }
 function dangXuatAndDangNhap(name, data, socket) {
   var infoUser = getUser(name);
   var array = infoUser.arrayFriend;
@@ -102,7 +112,12 @@ function dangXuatAndDangNhap(name, data, socket) {
 //data => {name:name,room:room}
 function joinChatRoom(data, socket) {
   var friend = searchIndexFriend(data.name, data.nameFriend);
+  var arrayMessJoin = friend.nguoiDung.arrayMess;
+  if (arrayMessJoin.length > 0) {
+    arrayMessJoin[arrayMessJoin.length - 1].status = true;
+  }
   socket.emit("cap-nhap-list-mess", friend.nguoiDung);
+  socket.emit("nguoi-lien-he", getUser(socket.name));
 }
 
 // cap nhat nguoi gui tin nhan moi nhat
@@ -140,10 +155,11 @@ function searchIndexFriend(name, nameFriend) {
 // nhan tin
 //data => {name: userName,mess:mess,room:room,time:new Date()}
 function senMess(data, socket) {
+  //   console.log(socket.rooms);
   searchFriendForName(data.name, data.userFriend).arrayMess.push({
     name: data.name,
     mess: data.mess,
-    status: false,
+    status: true,
     date: data.time,
   });
   searchFriendForName(data.userFriend, data.name).arrayMess.push({
@@ -184,7 +200,7 @@ function addFriendAccept(data, socket) {
       friends.arrayMess.push({
         name: data.myName,
         mess: "Mình đồng ý chúng ta là bạn",
-        status: false,
+        status: true,
         date: new Date(),
       });
       thongTinNguoiDung[i].arrayFriend.push(friends);
@@ -354,7 +370,7 @@ function userOnline(name, socket) {
   }
 }
 
-// tiem kiem nguoi dung de ket ban
+// tiem kiem nguoi dung de ket ban  { name: userName, friendName: filter }
 function searchFriend(data, socket) {
   var arr = [];
 
@@ -362,18 +378,26 @@ function searchFriend(data, socket) {
     var tenCuaMang = thongTinNguoiDung[index].name.toLowerCase();
     if (
       tenCuaMang.startsWith(data.friendName) &&
-      (isFriend(data.name, thongTinNguoiDung[index].name) ||
-        checkFriendRequest(thongTinNguoiDung[index].name, data.name))
+      !checkFriendRequest(data.name, thongTinNguoiDung[index].name)
     ) {
-      arr.push({ name: thongTinNguoiDung[index].name, isFriend: true });
+      if (
+        isFriend(data.name, thongTinNguoiDung[index].name) ||
+        checkFriendRequest(thongTinNguoiDung[index].name, data.name)
+      ) {
+        arr.push({ name: thongTinNguoiDung[index].name, isFriend: true });
+      }
+      if (
+        !isFriend(data.name, thongTinNguoiDung[index].name) &&
+        !checkFriendRequest(thongTinNguoiDung[index].name, data.name)
+      ) {
+        arr.push({ name: thongTinNguoiDung[index].name, isFriend: false });
+      }
     }
-    if (
-      tenCuaMang.startsWith(data.friendName) &&
-      !isFriend(data.name, thongTinNguoiDung[index].name) &&
-      !checkFriendRequest(thongTinNguoiDung[index].name, data.name)
-    ) {
-      arr.push({ name: thongTinNguoiDung[index].name, isFriend: false });
-    }
+    // if (
+    //   tenCuaMang.startsWith(data.friendName) &&
+    //   checkFriendRequest(data.name, thongTinNguoiDung[index].name)
+    // ) {
+    // }
   }
   socket.emit("getValuesSearch", arr);
 }

@@ -108,16 +108,24 @@ function addFriendAccept(name) {
     time: time,
   });
 }
-function clickAddFriend(element) {
-  var dis = document.getElementById(element).style.display + "";
 
+function clickAddFriend() {
+  $("#noti-contener").css("display", "none");
+  var dis = document.getElementById("add-contener").style.display + "";
   if (dis !== "block") {
-    if (element === "noti-contener") {
-      io.emit("seen-notify", userName);
-    }
-    document.getElementById(element).style.display = "block";
+    document.getElementById("add-contener").style.display = "block";
   } else {
-    document.getElementById(element).style.display = "none";
+    document.getElementById("add-contener").style.display = "none";
+  }
+}
+function clickNotify() {
+  $("#add-contener").css("display", "none");
+  var dis = document.getElementById("noti-contener").style.display + "";
+  if (dis !== "block") {
+    io.emit("seen-notify", userName);
+    document.getElementById("noti-contener").style.display = "block";
+  } else {
+    document.getElementById("noti-contener").style.display = "none";
   }
 }
 io.on("reject-request-friend", (array) => {
@@ -169,8 +177,17 @@ io.on("reject-request-friend", (array) => {
 io.on("nguoi-lien-he", (thongTinNguoiDung) => {
   var arrayFriend = thongTinNguoiDung.arrayFriend;
   $(".list-status").html("");
+  var count = 0;
   for (let index = 0; index < arrayFriend.length; index++) {
     const element = arrayFriend[index];
+    let arrayMess = element.arrayMess;
+    let nameSend = element.arrayMess[element.arrayMess.length - 1].name;
+    if (nameSend === userName) {
+      nameSend = "Bạn";
+    }
+    if (!arrayMess[arrayMess.length - 1].status) {
+      count++;
+    }
     $(".list-status").append(
       "<li  onclick=\"clickItemLienHe('" +
         element.name +
@@ -193,7 +210,7 @@ io.on("nguoi-lien-he", (thongTinNguoiDung) => {
         element.name +
         "</h3>" +
         "<p>" +
-        element.arrayMess[element.arrayMess.length - 1].name +
+        nameSend +
         ": " +
         element.arrayMess[element.arrayMess.length - 1].mess +
         "</p>" +
@@ -205,6 +222,12 @@ io.on("nguoi-lien-he", (thongTinNguoiDung) => {
     } else {
       $("#status" + index).css("display", "block");
     }
+  }
+  if (count > 0) {
+    $("#n-mes").css("display", "block");
+    $("#n-mes").text(count);
+  } else {
+    $("#n-mes").css("display", "none");
   }
 });
 var room;
@@ -272,3 +295,8 @@ io.on("nhan-tin-nhan", (data) => {
   var element = document.getElementById("out");
   element.scrollTop = element.scrollHeight;
 });
+//sign out
+function signout() {
+  io.emit("sign-out", userName);
+  window.location = "/";
+}
