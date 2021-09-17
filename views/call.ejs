@@ -7,24 +7,39 @@
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="call.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.20.0/dist/axios.min.js"></script>
+    <script src="socket.io/socket.io.js"></script>
+
+    <script type="text/javascript" src="https://cdn.stringee.com/sdk/web/latest/stringee-web-sdk.min.js"></script>
+    <script src="api.js"></script>
+    <script src="call.js"></script>
     <title>Call Video</title>
 </head>
 <body>
     <div class="container">
         <div class="frame-display" id="">
             <div class="big-display">
-                <video autoplay  id="remote-video"></video>
+                <video autoplay muted="false" id="remoteVideo"></video>
             </div>
             <div class="small-display" >
-                <video autoplay muted="false" id="local-video"></video>
+                <video autoplay muted="false" id="localVideo"></video>
             </div>
             <div class="call-icon">
                 <div class="mic"><i class="uil uil-microphone"></i></div>
-                <div class="video"><i class="uil uil-video"></i></div>
-                <div class="hangup"><i class="uil uil-missed-call"></i></div>
+                <div class="video" id="cl" onclick="call()"><i class="uil uil-video"></i></div>
+                <div class="hangup" onclick="tatMay()"><i class="uil uil-missed-call"></i></div>
+            </div>
+
+            <div id="modal-btn-call">
+                <p>Gọi</p>
+                <div onclick="call()" class="hangup"><i class="uil uil-missed-call"></i></div>
             </div>
         </div>
-
+       
     </div>
+    
+    
 </body>
 </html>

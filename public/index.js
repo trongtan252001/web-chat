@@ -309,3 +309,43 @@ function signout() {
   io.emit("sign-out", userName);
   window.location = "/";
 }
+function openLinkCallVideo() {
+  var h = $(document).height();
+  var w = $(document).width();
+  var f = $("#name-fiend").text();
+
+  window.open(
+    "/call?n=" + userName + "&f=" + f + "&l=f",
+    "_blank",
+    "width=" + w + ",height=" + h
+  );
+  // window.open("https://www.w3schools.com", "_blank");
+}
+var datas;
+//data => name, new id
+io.on("cuoc-goi-den", (data) => {
+  datas = data;
+  document.getElementById('cuoc-go-den').style.display = 'flex';
+  
+});
+function batMay() {
+  document.getElementById('cuoc-go-den').style.display = 'none';
+
+  var h = $(document).height();
+  var w = $(document).width();
+  window.open(
+    "/call?n=" + userName + "&f=" + datas.name + "&l=t",
+    "_blank",
+    "width=" + w + ",height=" + h
+  );
+
+}
+function tuChoiKhongNgheMay() {
+  document.getElementById('cuoc-go-den').style.display = 'none';
+
+  io.emit('tu-choi-khong-nghe-may',datas.id);
+}
+io.on('huy-cuoc-goi',data =>{
+  document.getElementById('cuoc-go-den').style.display = 'none';
+
+})

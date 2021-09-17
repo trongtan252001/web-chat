@@ -1,23 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>App chat</title>
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="socket.io/socket.io.js"></script>
     <script src="index.js"></script>
+
 </head>
+
 <body>
+    <div id="cuoc-go-den">
+        <p>Nghe máy</p>
+        <div onclick="batMay()" class="reject"><i class="uil uil-missed-call"></i></div>
+        <div onclick="tuChoiKhongNgheMay()" class="reject"><i class="uil uil-missed-call"></i></div>
+
+    </div>
     <div id="overlay" onclick="turnOfffNotiVsAdd()"></div>
     <div class="nav">
         <div class="search-name" id="acticve-icon">
-            <i class="uil uil-arrow-left arrow-icon" ></i>
-            <input  id="myInput"  class="search-input" name="search" placeholder="Search..." onclick = "searchFriend()"  onkeyup="search()">
+            <i class="uil uil-arrow-left arrow-icon"></i>
+            <input id="myInput" class="search-input" name="search" placeholder="Search..." onclick="searchFriend()"
+                onkeyup="search()">
             <i class="uil uil-search search-icon"></i>
         </div>
         <div class="header">
@@ -84,63 +95,103 @@
                                 <img src="images/user.png" alt="" class="img-noti">
                                 <div>
                                     <div class="over-text">
-                                        <span class="info-noti">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)</span>
+                                        <span class="info-noti">It is a long established fact that a reader will be
+                                            distracted by the readable content of a page when looking at its layout. The
+                                            point of using Lorem Ipsum is that it has a more-or-less normal distribution
+                                            of letters, as opposed to using 'Content here, content here', making it look
+                                            like readable English. Many desktop publishing packages and web page editors
+                                            now use Lorem Ipsum as their default model text, and a search for 'lorem
+                                            ipsum' will uncover many web sites still in their infancy. Various versions
+                                            have evolved over the years, sometimes by accident, sometimes on purpose
+                                            (injected humour and the like)</span>
                                     </div>
                                     <div>
                                         <button class="button cn">Chấp nhận</button>
                                         <button class="button dl">Xoá</button>
                                     </div>
                                 </div>
-                             </li>
+                            </li>
 
                             <li class="item-noti">
                                 <img src="images/user.png" alt="" class="img-noti">
                                 <div>
                                     <div class="over-text">
-                                        <span class="info-noti">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)</span>
+                                        <span class="info-noti">It is a long established fact that a reader will be
+                                            distracted by the readable content of a page when looking at its layout. The
+                                            point of using Lorem Ipsum is that it has a more-or-less normal distribution
+                                            of letters, as opposed to using 'Content here, content here', making it look
+                                            like readable English. Many desktop publishing packages and web page editors
+                                            now use Lorem Ipsum as their default model text, and a search for 'lorem
+                                            ipsum' will uncover many web sites still in their infancy. Various versions
+                                            have evolved over the years, sometimes by accident, sometimes on purpose
+                                            (injected humour and the like)</span>
                                     </div>
                                     <div>
                                         <button class="button cn">Chấp nhận</button>
                                         <button class="button dl">Xoá</button>
                                     </div>
                                 </div>
-                             </li>
-                             <li class="item-noti">
-                                 <img src="images/user.png" alt="" class="img-noti">
-                                 <div>
-                                     <div class="over-text">
-                                         <span class="info-noti">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)</span>
-                                     </div>
-                                     <div>
-                                         <button class="button cn">Chấp nhận</button>
-                                         <button class="button dl">Xoá</button>
-                                     </div>
-                                 </div>
-                             </li>
-                             <li class="item-noti">
-                                 <img src="images/user.png" alt="" class="img-noti">
-                                 <div>
-                                     <div class="over-text">
-                                         <span class="info-noti">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)</span>
-                                     </div>
-                                     <div>
-                                         <button class="button cn">Chấp nhận</button>
-                                         <button class="button dl">Xoá</button>
-                                     </div>
-                                 </div>
-                             </li>
-                             <li class="item-noti">
-                                 <img src="images/user.png" alt="" class="img-noti">
-                                 <div>
-                                     <div class="over-text">
-                                         <span class="info-noti">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)</span>
-                                     </div>
-                                     <div>
-                                         <button class="button cn">Chấp nhận</button>
-                                         <button class="button dl">Xoá</button>
-                                     </div>
-                                 </div>
-                             </li>
+                            </li>
+                            <li class="item-noti">
+                                <img src="images/user.png" alt="" class="img-noti">
+                                <div>
+                                    <div class="over-text">
+                                        <span class="info-noti">It is a long established fact that a reader will be
+                                            distracted by the readable content of a page when looking at its layout. The
+                                            point of using Lorem Ipsum is that it has a more-or-less normal distribution
+                                            of letters, as opposed to using 'Content here, content here', making it look
+                                            like readable English. Many desktop publishing packages and web page editors
+                                            now use Lorem Ipsum as their default model text, and a search for 'lorem
+                                            ipsum' will uncover many web sites still in their infancy. Various versions
+                                            have evolved over the years, sometimes by accident, sometimes on purpose
+                                            (injected humour and the like)</span>
+                                    </div>
+                                    <div>
+                                        <button class="button cn">Chấp nhận</button>
+                                        <button class="button dl">Xoá</button>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="item-noti">
+                                <img src="images/user.png" alt="" class="img-noti">
+                                <div>
+                                    <div class="over-text">
+                                        <span class="info-noti">It is a long established fact that a reader will be
+                                            distracted by the readable content of a page when looking at its layout. The
+                                            point of using Lorem Ipsum is that it has a more-or-less normal distribution
+                                            of letters, as opposed to using 'Content here, content here', making it look
+                                            like readable English. Many desktop publishing packages and web page editors
+                                            now use Lorem Ipsum as their default model text, and a search for 'lorem
+                                            ipsum' will uncover many web sites still in their infancy. Various versions
+                                            have evolved over the years, sometimes by accident, sometimes on purpose
+                                            (injected humour and the like)</span>
+                                    </div>
+                                    <div>
+                                        <button class="button cn">Chấp nhận</button>
+                                        <button class="button dl">Xoá</button>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="item-noti">
+                                <img src="images/user.png" alt="" class="img-noti">
+                                <div>
+                                    <div class="over-text">
+                                        <span class="info-noti">It is a long established fact that a reader will be
+                                            distracted by the readable content of a page when looking at its layout. The
+                                            point of using Lorem Ipsum is that it has a more-or-less normal distribution
+                                            of letters, as opposed to using 'Content here, content here', making it look
+                                            like readable English. Many desktop publishing packages and web page editors
+                                            now use Lorem Ipsum as their default model text, and a search for 'lorem
+                                            ipsum' will uncover many web sites still in their infancy. Various versions
+                                            have evolved over the years, sometimes by accident, sometimes on purpose
+                                            (injected humour and the like)</span>
+                                    </div>
+                                    <div>
+                                        <button class="button cn">Chấp nhận</button>
+                                        <button class="button dl">Xoá</button>
+                                    </div>
+                                </div>
+                            </li>
                         </ul>
 
                     </div>
@@ -182,7 +233,7 @@
                     <div class="center-top">
                         <div class="inf-receiver">
                             <div>
-                                <h3 class="title-center">
+                                <h3 id="name-fiend" class="title-center">
                                     Nguyen Van B
                                 </h3>
                                 <p class="subtitle-center">
@@ -190,14 +241,14 @@
                                 </p>
                             </div>
                             <div class="icon">
-                                <i class="uil uil-phone" id="call-mic" ></i>
+                                <i class="uil uil-phone" id="call-mic"></i>
                                 <i class="uil uil-video" id="call-video " onclick="openLinkCallVideo()"></i>
                             </div>
                         </div>
 
                     </div>
                     <div class="frame-chat style-1" id="out">
-                        <div class="chat-list" >
+                        <div class="chat-list">
 
                             <!-- <div class="chat bubble-left">Tin nhan 1</div>
                                <div class="chat bubble-right">Tin nhan 2</div> -->
@@ -205,7 +256,7 @@
                         </div>
                     </div>
                     <div class="center-bot">
-                        <input id="input-mess" class="typing-input" name="search" placeholder="Aa" >
+                        <input id="input-mess" class="typing-input" name="search" placeholder="Aa">
                         <div onclick="clickSendMess()" id="send-mess" class="send-chat">
                             <i class="uil uil-message"></i>
                         </div>
@@ -220,7 +271,7 @@
                     </div>
                     <div class="list-data">
                         <ul class="list-status">
-                             <!-- <li onclick="clickItemLienHe({name:})" class="item-status">
+                            <!-- <li onclick="clickItemLienHe({name:})" class="item-status">
                                 <div class="user-ava">
                                     <div>
                                         <img src="images/user.png" alt="" class="img-friend">
@@ -232,7 +283,7 @@
                                     <p>Linh typing..</p>
                                 </div>
                             </li> -->
-                           <!-- <li class="item-status">
+                            <!-- <li class="item-status">
                                 <div class="user-ava">
                                     <div>
                                         <img src="images/user.png" alt="" class="img-friend">
@@ -299,23 +350,24 @@
             </div>
 
 
-          </div>
+        </div>
     </div>
     <script>
-       var element = document.getElementById("out");
+        var element = document.getElementById("out");
         element.scrollTop = element.scrollHeight;
-        function openLinkCallVideo(){
-            var h = $(document).height();
-            var w =$(document).width();
-            window.open("/call","","width="+w+",height="+h);
-            // window.open("https://www.w3schools.com", "_blank");
 
-        }
-
+       
 
     </script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
