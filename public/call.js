@@ -47,7 +47,7 @@ function call() {
     console.log("make call callback: " + JSON.stringify(res));
   });
 }
-
+let localStream;
 function settingCallEvent(call1) {
   call1.on("addremotestream", function (stream) {
     // reset srcObject to work around minor bugs in Chrome and Edge.
@@ -61,6 +61,7 @@ function settingCallEvent(call1) {
     console.log("addlocalstream");
     localVideo.srcObject = null;
     localVideo.srcObject = stream;
+    localStream = stream;
   });
 
   call1.on("signalingstate", function (state) {
@@ -89,4 +90,23 @@ function tatMay() {
     io.emit('tat-may-boi-nguoi-goi',{userName:userName,nameFriend:nameFriend});
     window.close();
   });
+}
+function toggleVideo() {
+  var onAndOff = localStream.getVideoTracks()[0].enabled;
+  if(!onAndOff){
+      localStream.getVideoTracks()[0].enabled = true;
+  }else{
+      localStream.getVideoTracks()[0].enabled = false;
+
+  }
+}
+function toggleAudio() {
+  var onAndOff =  localStream.getAudioTracks()[0].enabled ;
+  alert(onAndOff)
+  if(!onAndOff){
+      localStream.getAudioTracks()[0].enabled = true;
+  }else{
+      localStream.getAudioTracks()[0].enabled = false;
+
+  }
 }
