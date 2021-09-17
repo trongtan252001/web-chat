@@ -1,0 +1,38 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+video {
+  width: 100%;
+  height: 100%;
+}
+.big-display {
+  background-color: red;
+  width: 100vw;
+  height: 100vh;
+}
+.frame-display {
+  position: relative;
+}
+.small-display {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: blue;
+  width: 200px;
+  height: 200px;
+}
+.call-icon {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, -50%);
+  display: flex;
+  margin-bottom: 10px;
+}
+.call-icon div {
+  font-size: 40px;
+  margin-left: 10px;
+  margin-right: 10px;
+}

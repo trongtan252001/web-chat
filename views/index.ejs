@@ -9,13 +9,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
     <script src="socket.io/socket.io.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
     <script src="index.js"></script>
 </head>
 <body>
+    <div id="overlay" onclick="turnOfffNotiVsAdd()"></div>
     <div class="nav">
         <div class="search-name" id="acticve-icon">
             <i class="uil uil-arrow-left arrow-icon" ></i>
@@ -183,12 +181,18 @@
                 <div class="center">
                     <div class="center-top">
                         <div class="inf-receiver">
-                            <h3 class="title-center">
-                                Nguyen Van B
-                            </h3>
-                            <p class="subtitle-center">
-                                Dang hoat dong
-                            </p>
+                            <div>
+                                <h3 class="title-center">
+                                    Nguyen Van B
+                                </h3>
+                                <p class="subtitle-center">
+                                    Dang hoat dong
+                                </p>
+                            </div>
+                            <div class="icon">
+                                <i class="uil uil-phone" id="call-mic" ></i>
+                                <i class="uil uil-video" id="call-video " onclick="openLinkCallVideo()"></i>
+                            </div>
                         </div>
 
                     </div>
@@ -209,7 +213,7 @@
 
                 </div>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-3 padding-px ">
                 <div class="right">
                     <div class="header-right">
                         <h4 class="right-title">Người liên hệ</h4>
@@ -300,7 +304,13 @@
     <script>
        var element = document.getElementById("out");
         element.scrollTop = element.scrollHeight;
+        function openLinkCallVideo(){
+            var h = $(document).height();
+            var w =$(document).width();
+            window.open("/call","","width="+w+",height="+h);
+            // window.open("https://www.w3schools.com", "_blank");
 
+        }
 
 
     </script>

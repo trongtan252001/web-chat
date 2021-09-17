@@ -114,9 +114,16 @@ function clickAddFriend() {
   var dis = document.getElementById("add-contener").style.display + "";
   if (dis !== "block") {
     document.getElementById("add-contener").style.display = "block";
+    document.getElementById("overlay").style.display = "block";
   } else {
     document.getElementById("add-contener").style.display = "none";
+    document.getElementById("overlay").style.display = "none";
   }
+}
+function turnOfffNotiVsAdd() {
+  $("#add-contener").css("display", "none");
+  $("#noti-contener").css("display", "none");
+  document.getElementById("overlay").style.display = "none";
 }
 function clickNotify() {
   $("#add-contener").css("display", "none");
@@ -124,8 +131,10 @@ function clickNotify() {
   if (dis !== "block") {
     io.emit("seen-notify", userName);
     document.getElementById("noti-contener").style.display = "block";
+    document.getElementById("overlay").style.display = "block";
   } else {
     document.getElementById("noti-contener").style.display = "none";
+    document.getElementById("overlay").style.display = "none";
   }
 }
 io.on("reject-request-friend", (array) => {

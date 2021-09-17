@@ -23,7 +23,9 @@ app.get("/home", (req, res) => {
 app.get("/signup", (req, res) => {
   res.render("signup");
 });
-
+app.get("/call", (req, res) => {
+  res.render("call");
+});
 var thongTinNguoiDung = [];
 thongTinNguoiDung.push(new nguoiDung("linh", "123"));
 thongTinNguoiDung.push(new nguoiDung("h1", "123"));
