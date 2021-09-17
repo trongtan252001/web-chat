@@ -89,6 +89,7 @@ button:focus {
 .left {
   margin-top: 10px;
   padding-right: 0px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .left-content {
   height: calc(var(--height-fixed) + 104px);
@@ -178,6 +179,7 @@ button:focus {
   overflow: auto;
 }
 .center {
+  visibility: hidden;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
@@ -245,6 +247,15 @@ button:focus {
 }
 .search-name.ass .search-icon {
   left: 40px;
+}
+.right {
+  padding: 20px 0 0 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.item-status {
+  border-radius: 7px;
+  padding: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .right-title {
   margin: 10px 0;

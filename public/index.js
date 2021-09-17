@@ -166,89 +166,109 @@ io.on("reject-request-friend", (array) => {
     document.getElementById("n-thong-bao").style.display = "none";
   }
 });
-
 io.on("nguoi-lien-he", (thongTinNguoiDung) => {
   var arrayFriend = thongTinNguoiDung.arrayFriend;
   $(".list-status").html("");
   for (let index = 0; index < arrayFriend.length; index++) {
     const element = arrayFriend[index];
-
     $(".list-status").append(
-      '<li  onclick="clickItemLienHe(\''+element.name+'\',\''+element.room+'\')"  class="item-status">' +
+      "<li  onclick=\"clickItemLienHe('" +
+        element.name +
+        "','" +
+        element.room +
+        "','" +
+        "status" +
+        index +
+        '\')"  class="item-status">' +
         '<div class="user-ava">' +
         " <div>" +
         '<img src="images/user.png" alt="" class="img-friend">' +
-        '<span class="status"></span>' +
+        '<span class="status" id="status' +
+        index +
+        '"></span>' +
         "</div>" +
         "</div>" +
         '<div class="info-status">' +
         "<h3>" +
         element.name +
         "</h3>" +
-        "<p>" 
-      +element.arrayMess[element.arrayMess.length-1].name +": "  +element.arrayMess[element.arrayMess.length-1].mess +
+        "<p>" +
+        element.arrayMess[element.arrayMess.length - 1].name +
+        ": " +
+        element.arrayMess[element.arrayMess.length - 1].mess +
         "</p>" +
         "</div>" +
         "</li>"
     );
+    if (!element.status) {
+      $("#status" + index).css("display", "none");
+    } else {
+      $("#status" + index).css("display", "block");
+    }
   }
 });
 var room;
 var userFriend;
-function clickItemLienHe(name,room) {
-  $('.chat-list').html('');
-  $('.title-center').text(name);
-    
-  io.emit('join-chat-room',{nameFriend:name,name:userName,room:room});
-   
-  userFriend= name;
-  // 
-
+function clickItemLienHe(name, room, idSpan) {
+  $(".chat-list").html("");
+  $(".title-center").text(name);
+  $(".center").css("visibility", "visible");
+  //   alert(idSpan);
+  io.emit("join-chat-room", { nameFriend: name, name: userName, room: room });
+  userFriend = name;
+  var status = document.getElementById(idSpan).style.display;
+  if (status === "block") {
+    $(".subtitle-center").text("Đang hoạt động");
+  } else {
+    $(".subtitle-center").text("Không hoạt động");
+  }
+  //
 }
-io.on('cap-nhap-list-mess', friend =>{
+io.on("cap-nhap-list-mess", (friend) => {
   var arrayMess = friend.arrayMess;
   for (let index = 0; index < arrayMess.length; index++) {
     const element = arrayMess[index];
     var mess = element.mess;
-    if(element.name === userName){
-      $('.chat-list').append(
-       '<div class="chat bubble-right">'+mess+'</div>'
+    if (element.name === userName) {
+      $(".chat-list").append(
+        '<div class="chat bubble-right">' + mess + "</div>"
       );
-    }else{
-      $('.chat-list').append(
-        '<div class="chat bubble-left">'+mess+'</div>'
-       );
+    } else {
+      $(".chat-list").append(
+        '<div class="chat bubble-left">' + mess + "</div>"
+      );
     }
-    
   }
 
-  room= friend.room;
+  room = friend.room;
   var element = document.getElementById("out");
   element.scrollTop = element.scrollHeight;
-} )
+});
 
 function clickSendMess() {
-  var mess = $('#input-mess').val().trim();
-  if(mess.length > 0){
-    io.emit('send-mess',{name: userName,userFriend:userFriend,mess:mess,room:room,time:new Date()});
-    $('#input-mess').val('');
-    io.emit('update-new-mess',{name:userName,nameFiend:userFriend});
-
+  var mess = $("#input-mess").val().trim();
+  if (mess.length > 0) {
+    io.emit("send-mess", {
+      name: userName,
+      userFriend: userFriend,
+      mess: mess,
+      room: room,
+      time: new Date(),
+    });
+    $("#input-mess").val("");
+    io.emit("update-new-mess", { name: userName, nameFiend: userFriend });
   }
-  
 }
-io.on('nhan-tin-nhan',data =>{
-  if(data.name === userName){
-    $('.chat-list').append(
-     '<div class="chat bubble-right">'+data.mess+'</div>'
+io.on("nhan-tin-nhan", (data) => {
+  if (data.name === userName) {
+    $(".chat-list").append(
+      '<div class="chat bubble-right">' + data.mess + "</div>"
     );
-  }else{
-    $('.chat-list').append(
-      '<div class="chat bubble-left">'+data.mess+'</div>'
-     );
-
-   }
+  } else {
+    $(".chat-list").append(
+      '<div class="chat bubble-left">' + data.mess + "</div>"
+    );
+  }
   var element = document.getElementById("out");
   element.scrollTop = element.scrollHeight;
-
-})
+});
