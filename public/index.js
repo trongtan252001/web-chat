@@ -10,10 +10,14 @@ function searchFriend() {
   $(".left-content").html("");
   var searchName = document.getElementById("acticve-icon");
   searchName.classList.add("ass");
+  document.getElementById("overlay").style.display = "block";
+
 }
 function search() {
   var input = document.getElementById("myInput");
   var filter = input.value.toLowerCase();
+  $(".modal-left").css("display", "block");
+
   io.emit("search", { name: userName, friendName: filter });
 }
 io.on("getValuesSearch", (arr) => {
@@ -124,6 +128,10 @@ function turnOfffNotiVsAdd() {
   $("#add-contener").css("display", "none");
   $("#noti-contener").css("display", "none");
   document.getElementById("overlay").style.display = "none";
+  $(".modal-left").css("display", "none");
+  $(".left-content").html("");
+  var searchName = document.getElementById("acticve-icon");
+  searchName.classList.remove("ass");
 }
 function clickNotify() {
   $("#add-contener").css("display", "none");
@@ -348,3 +356,10 @@ function tuChoiKhongNgheMay() {
 io.on("huy-cuoc-goi", (data) => {
   document.getElementById("cuoc-go-den").style.display = "none";
 });
+function hideModalSearch() {
+  $(".modal-left").css("display", "none");
+  $(".left-content").html("");
+  var searchName = document.getElementById("acticve-icon");
+  searchName.classList.remove("ass");
+  document.getElementById("overlay").style.display = "none";
+}
