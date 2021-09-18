@@ -421,7 +421,22 @@ button:focus {
   /* flex-direction: row; */
 }
 
-#cuoc-go-den{
+#modal-btn-call div {
+  color: rgb(43, 235, 43);
+}
+#ten-nguoi-goi {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 50px;
+}
+/* .answer {
+  color: rgb(43, 235, 43);
+  font-size: 50px;
+}
+.reject {
+  color: red;
+  font-size: 50px;
+} */
+#cuoc-go-den {
   position: absolute;
   z-index: 2;
   width: 100%;
@@ -430,19 +445,37 @@ button:focus {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgb(187, 183, 183);
+  background-color: #4a4e51;
   display: none;
   justify-content: center;
   align-items: center;
   font-size: 40px;
   padding: 20px;
-  
-
 }
-#cuoc-go-den p{
+#cuoc-go-den p {
   margin-right: 20px;
 }
-#modal-btn-call div{
-  color: rgb(43, 235, 43);
+#cuoc-go-den div {
+  display: flex;
+  color: #fff;
+  font-size: 40px;
+  width: 100px;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 25px;
 }
+#cuoc-go-den div:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
+.answer {
+  box-shadow: 0 0 10px rgb(17, 230, 17);
+  background-color: rgb(17, 230, 17);
+  margin-right: 20px;
+}
+.reject {
+  box-shadow: 0 0 10px red;
 
+  background-color: red;
+}

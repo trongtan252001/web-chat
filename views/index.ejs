@@ -18,10 +18,9 @@
 
 <body>
     <div id="cuoc-go-den">
-        <p>Nghe máy</p>
-        <div onclick="batMay()" class="reject"><i class="uil uil-missed-call"></i></div>
+        <p id="ten-nguoi-goi">Cuộc gọi đến</p>
+        <div onclick="batMay()" class="answer"><i class="uil uil-phone"></i></div>
         <div onclick="tuChoiKhongNgheMay()" class="reject"><i class="uil uil-missed-call"></i></div>
-
     </div>
     <div id="overlay" onclick="turnOfffNotiVsAdd()"></div>
     <div class="nav">
@@ -241,8 +240,8 @@
                                 </p>
                             </div>
                             <div class="icon">
-                                <i class="uil uil-phone" id="call-mic"></i>
-                                <i class="uil uil-video" id="call-video " onclick="openLinkCallVideo()"></i>
+                                <i class="uil uil-phone" id="call-mic" onclick="openLinkCallVideo('f')"></i>
+                                <i class="uil uil-video" id="call-video " onclick="openLinkCallVideo('t')"></i>
                             </div>
                         </div>
 
@@ -356,7 +355,7 @@
         var element = document.getElementById("out");
         element.scrollTop = element.scrollHeight;
 
-       
+
 
     </script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

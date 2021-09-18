@@ -309,13 +309,13 @@ function signout() {
   io.emit("sign-out", userName);
   window.location = "/";
 }
-function openLinkCallVideo() {
+function openLinkCallVideo(isVideo) {
   var h = $(document).height();
   var w = $(document).width();
   var f = $("#name-fiend").text();
 
   window.open(
-    "/call?n=" + userName + "&f=" + f + "&l=f",
+    "/call?n=" + userName + "&f=" + f + "&l=f" + "&c=" + isVideo,
     "_blank",
     "width=" + w + ",height=" + h
   );
@@ -325,27 +325,26 @@ var datas;
 //data => name, new id
 io.on("cuoc-goi-den", (data) => {
   datas = data;
-  document.getElementById('cuoc-go-den').style.display = 'flex';
-  
+  document.getElementById("cuoc-go-den").style.display = "flex";
+  document.getElementById("ten-nguoi-goi").innerHTML =
+    data.name + " gọi cho bạn";
 });
 function batMay() {
-  document.getElementById('cuoc-go-den').style.display = 'none';
+  document.getElementById("cuoc-go-den").style.display = "none";
 
   var h = $(document).height();
   var w = $(document).width();
   window.open(
-    "/call?n=" + userName + "&f=" + datas.name + "&l=t",
+    "/call?n=" + userName + "&f=" + datas.name + "&l=t&c=" + datas.isVideo,
     "_blank",
     "width=" + w + ",height=" + h
   );
-
 }
 function tuChoiKhongNgheMay() {
-  document.getElementById('cuoc-go-den').style.display = 'none';
+  document.getElementById("cuoc-go-den").style.display = "none";
 
-  io.emit('tu-choi-khong-nghe-may',datas.id);
+  io.emit("tu-choi-khong-nghe-may", datas.id);
 }
-io.on('huy-cuoc-goi',data =>{
-  document.getElementById('cuoc-go-den').style.display = 'none';
-
-})
+io.on("huy-cuoc-goi", (data) => {
+  document.getElementById("cuoc-go-den").style.display = "none";
+});

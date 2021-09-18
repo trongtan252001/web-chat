@@ -94,25 +94,28 @@ io.on("connection", (socket) => {
       );
     }
   });
-  socket.on('call-video',data =>{
-    callVideo(data,socket);
+  socket.on("call-video", (data) => {
+    callVideo(data, socket);
   });
-  socket.on('tu-choi-khong-nghe-may', id =>{
-     io.to(id).emit('friend-khong-bat-may',socket.name);
+  socket.on("tu-choi-khong-nghe-may", (id) => {
+    io.to(id).emit("friend-khong-bat-may", socket.name);
   });
-  socket.on('tat-may-boi-nguoi-goi',data =>{
-    tatMayBoiNguoiGoi(data,socket);
+  socket.on("tat-may-boi-nguoi-goi", (data) => {
+    tatMayBoiNguoiGoi(data, socket);
   });
 });
 // data =>io.emit('tat-may-boi-nguoi-goi',{userName:userName,nameFriend:nameFriend});
-function tatMayBoiNguoiGoi(data,socket) {
-  io.to(getIdUser(data.nameFriend)).emit('huy-cuoc-goi', data);
+function tatMayBoiNguoiGoi(data, socket) {
+  io.to(getIdUser(data.nameFriend)).emit("huy-cuoc-goi", data);
 }
 //call video
-// data => {userName:userName,friendName:f}
-function callVideo(data,socket) {
-  
-  io.to(getIdUser(data.friendName)).emit('cuoc-goi-den',{name:data.userName,id:socket.id});
+// data => {userName:userName,friendName:f,isCall: isVideo}
+function callVideo(data, socket) {
+  io.to(getIdUser(data.friendName)).emit("cuoc-goi-den", {
+    name: data.userName,
+    id: socket.id,
+    isVideo: data.isCall,
+  });
 }
 //dang xuat data  { name: socket.name, status: true }
 function dangXuatAndDangNhap(name, data, socket) {
