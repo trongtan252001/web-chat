@@ -103,7 +103,117 @@ io.on("connection", (socket) => {
   socket.on("tat-may-boi-nguoi-goi", (data) => {
     tatMayBoiNguoiGoi(data, socket);
   });
+
+  socket.on('create-room',data =>{
+      createRoom(data,socket);
+  });
+
+  socket.on('add-human-for-group',data =>{
+    addHumanForGroup(data,socket);
+  });
 });
+//-----------------------------Tao room-------------------------
+var arrayRoom = [];
+// them thanh vien vao room
+// data => { userName: userName, roomName: room }
+function addHumanForGroup(data,socket) {
+
+  // lay user ra
+  var user = getUser(data.userName);
+
+  // check xem ten ton tai trong server ko
+  if(user == null){
+    socket.emit('add-human-err-false',data.userName);
+    return;
+  }
+  // neu ton tai thi lay room trong server ra
+  var room = searchRoom(data.roomName);
+
+  // lay danh dach sach thanh vien trong room
+  var arrayHu = room.arrayMember;
+
+  //set xem nguoi dung da cos trong room chua
+  for (let index = 0; index < arrayHu.length; index++) {
+    const element = arrayHu[index];
+    if(element.name === data.userName ){
+      socket.emit('add-human-err-true',data.userName);
+      return;
+    }
+  }
+
+  // neu chua thi push vao room server
+  arrayHu.push({name:user.name,permission: 2});
+
+  // push room vao room cua user dc moi
+  user.arrayRoom.push({nameRoom:room.name, id:room.id,number: arrayHu.length});
+
+  // thong bao ve cho toan bo thanh vien trong room
+  for (let index = 0; index < arrayHu.length; index++) {
+    const element = arrayHu[index];
+    var userAll = getUser(element.name);
+    var arrayRoomUser = searchRoomUser(room.name,userAll.arrayRoom);
+
+    // set lai so thanh vien trong room
+    arrayRoomUser.number = arrayHu.length;
+    io.to(userAll.id).emit('create-room-sus',userAll.arrayRoom);
+
+    
+  }
+
+
+}
+// data =>  {userName:userName,roomName:roomName});
+function createRoom(data,socket) {
+
+  // xem room da ton tai chua
+  for (let index = 0; index < arrayRoom.length; index++) {
+    const element = arrayRoom[index];
+    if(element.name === data.roomName){
+      socket.emit('create-room-err',data.roomName);
+      return;
+    }
+    
+  }
+  // add vao room user
+  var user = getUser(data.userName);
+
+  // add room vao room server
+  var rooms = new room(data.roomName);
+  rooms.arrayMember.push({name:user.name,permission: 1});
+  arrayRoom.push(rooms); 
+
+  // add room vao rom user
+  user.arrayRoom.push({nameRoom:data.roomName, id:rooms.id,number: 1});
+  // gui ve cho client
+  socket.emit('create-room-sus',user.arrayRoom);
+
+}
+//tim kiem room trong user
+function searchRoomUser(nameRoom,array) {
+  for (let index = 0; index < array.length; index++) {
+    const element = array[index];
+    if(element.nameRoom === nameRoom){
+      return element;
+    }
+  }
+  return null;
+}
+// tim kiem room
+function searchRoom(room) {
+  for (let index = 0; index < arrayRoom.length; index++) {
+    const element = arrayRoom[index];
+    if(element.name === room){
+      return element;
+    }
+  }
+  return null;
+}
+function room(name) {
+  this.name = name;
+  this.id = uuid();
+  this.arrayMember = [];//name:user.name,permission: 1
+  this.arrayMess = [];
+}
 // data =>io.emit('tat-may-boi-nguoi-goi',{userName:userName,nameFriend:nameFriend});
 function tatMayBoiNguoiGoi(data, socket) {
   io.to(getIdUser(data.nameFriend)).emit("huy-cuoc-goi", data);
@@ -179,7 +289,6 @@ function searchIndexFriend(name, nameFriend) {
 // nhan tin
 //data => {name: userName,mess:mess,room:room,time:new Date()}
 function senMess(data, socket) {
-  //   console.log(socket.rooms);
   searchFriendForName(data.name, data.userFriend).arrayMess.push({
     name: data.name,
     mess: data.mess,
@@ -389,6 +498,8 @@ function userOnline(name, socket) {
         "reject-request-friend",
         thongTinNguoiDung[index].arrayNotify
       );
+      socket.emit('create-room-sus',thongTinNguoiDung[index].arrayRoom);
+
       return;
     }
   }
@@ -443,6 +554,7 @@ function nguoiDung(name, password) {
   this.arrayFriendRequest = [];
   this.arrayFriend = [];
   this.arrayNotify = [];
+  this.arrayRoom = [];
 }
 
 function friend(name, room, id) {

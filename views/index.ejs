@@ -231,10 +231,10 @@
                             <h3 class="title-group">
                                 Nhóm
                             </h3>
-                            <i class="uil uil-plus-circle"></i>
+                            <i class="uil uil-plus-circle" onclick="ClickAddRoom()"></i>
                         </div>
                         <ul class="group-data">
-                            <li class="group-item">
+                            <!-- <li class="group-item">
                                 <div class="group-img">
                                     <img src="images/user.png" alt="" class="img-group">
                                     <span class="status"></span>
@@ -310,7 +310,7 @@
                                     <h4 class="title-item-group">Nhóm 1</h4>
                                     <p>linh typing...</p>
                                 </div>
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
 
@@ -330,9 +330,15 @@
                                     Dang hoat dong
                                 </p>
                             </div>
-                            <div class="icon">
+                            <div class="icon icon1">
                                 <i class="uil uil-phone" id="call-mic" onclick="openLinkCallVideo('f')"></i>
                                 <i class="uil uil-video" id="call-video " onclick="openLinkCallVideo('t')"></i>
+                            </div>
+
+                            <div class="icon icon2">
+                                <i class="uil uil-phone" id="call-mic" ></i>
+                                <i class="uil uil-video" id="call-video "></i>
+                                <i class="uil uil-plus-circle" onclick="addHumanForGroup()"></i>
                             </div>
                         </div>
 
@@ -345,9 +351,16 @@
 
                         </div>
                     </div>
-                    <div class="center-bot">
+                    <div class="center-bot center-bot-mess">
                         <input id="input-mess" class="typing-input" name="search" placeholder="Aa">
                         <div onclick="clickSendMess()" id="send-mess" class="send-chat">
+                            <i class="uil uil-message"></i>
+                        </div>
+                    </div>
+
+                    <div class="center-bot center-bot-room">
+                        <input id="input-mess-room" class="typing-input" name="search" placeholder="Aa">
+                        <div  id="send-mess-room" class="send-chat">
                             <i class="uil uil-message"></i>
                         </div>
                     </div>

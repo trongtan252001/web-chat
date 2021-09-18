@@ -11,7 +11,6 @@ function searchFriend() {
   var searchName = document.getElementById("acticve-icon");
   searchName.classList.add("ass");
   document.getElementById("overlay").style.display = "block";
-
 }
 function search() {
   var input = document.getElementById("myInput");
@@ -251,6 +250,11 @@ var room;
 var userFriend;
 function clickItemLienHe(name, room, idSpan) {
   $(".chat-list").html("");
+  $(".icon2").css('display','none');
+  $(".icon1").css('display','flex');
+  $(".center-bot-room").css('display','none');
+  $(".center-bot-mess").css('display','flex');
+
   $(".title-center").text(name);
   $(".center").css("visibility", "visible");
   //   alert(idSpan);
@@ -363,3 +367,62 @@ function hideModalSearch() {
   searchName.classList.remove("ass");
   document.getElementById("overlay").style.display = "none";
 }
+
+function ClickAddRoom() {
+  const roomName = prompt("Nhập tên nhóm");
+  if (roomName) {
+    io.emit("create-room", { userName: userName, roomName: roomName });
+  }
+}
+io.on("create-room-err", (nameRoom) => {
+  alert("Phòng " + nameRoom + " đã tồn tại");
+});
+// nameRoom:data.roomName, id:rooms.id,number:1
+io.on("create-room-sus", (array) => {
+  $(".group-data").html("");
+  for (let index = 0; index < array.length; index++) {
+    const element = array[index];
+    $(".group-data").append(
+      '<li onclick = "clickItemGroup(\''+element.nameRoom+'\',\''+element.id+'\')" class="group-item">' +
+        '<div class="group-img">' +
+        '<img src="images/user.png" alt="" class="img-group">' +
+        '<span class="status"></span>' +
+        '<span class="count-group">+'+element.number+'</span>' +
+        "</div>" +
+        "<div>" +
+        '<h4 class="title-item-group">' +
+        element.nameRoom +
+        "</h4>" +
+        "<p>linh typing...</p>" +
+        "</div>" +
+        "</li>"
+    );
+  }
+});
+
+function clickItemGroup(name,id) {
+  $(".center").css("visibility", "visible");
+  $(".chat-list").html("");
+  $(".icon1").css('display','none');
+  $(".center-bot-mess").css('display','none');
+  $(".center-bot-room").css('display','flex');
+
+  $(".icon2").css('display','flex');
+  $(".title-center").text(name);
+}
+
+function addHumanForGroup() {
+  const userName = prompt("Nhập tên friend");
+  const room =   $(".title-center").text();
+
+  if (userName) {
+    io.emit("add-human-for-group", { userName: userName, roomName: room });
+  }
+}
+
+io.on('add-human-err-false',name =>{
+  alert('Người dùng không tồn tại')
+});
+io.on('add-human-err-true',name =>{
+  alert('Đã có trong nhóm')
+});
