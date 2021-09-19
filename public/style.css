@@ -281,7 +281,7 @@ button:focus {
   -webkit-border-radius: 15px;
   -moz-border-radius: 15px;
   border-radius: 15px;
-  margin-bottom: 2em;
+  margin-bottom: 10px;
   clear: both;
   max-width: 50%;
 }
@@ -546,4 +546,13 @@ button:focus {
   box-shadow: 0 0 10px red;
 
   background-color: red;
+}
+
+.name-left{
+  position: absolute;
+  top: -18px;
+  font-size: 11px;
+}
+.chat{
+  margin-top: 25px;
 }

@@ -382,6 +382,11 @@ io.on("create-room-sus", (array) => {
   $(".group-data").html("");
   for (let index = 0; index < array.length; index++) {
     const element = array[index];
+    var name = element.mess.name;
+    if(name === userName){
+      name = 'bạn';
+    }
+    
     $(".group-data").append(
       '<li onclick = "clickItemGroup(\''+element.nameRoom+'\',\''+element.id+'\')" class="group-item">' +
         '<div class="group-img">' +
@@ -393,7 +398,7 @@ io.on("create-room-sus", (array) => {
         '<h4 class="title-item-group">' +
         element.nameRoom +
         "</h4>" +
-        "<p>linh typing...</p>" +
+        "<p>"+name+": "+element.mess.mess+"</p>" +
         "</div>" +
         "</li>"
     );
@@ -409,6 +414,10 @@ function clickItemGroup(name,id) {
 
   $(".icon2").css('display','flex');
   $(".title-center").text(name);
+   
+
+  io.emit('join-room-group', {name:userName,id:id,room:name});
+
 }
 
 function addHumanForGroup() {
@@ -425,4 +434,64 @@ io.on('add-human-err-false',name =>{
 });
 io.on('add-human-err-true',name =>{
   alert('Đã có trong nhóm')
+});
+
+function clickSendMessRoom() {
+  var mess = $('#input-mess-room').val();
+  const room =   $(".title-center").text();
+
+  if(mess.trim().length > 0){
+     $('#input-mess-room').val('');
+
+    io.emit('send-mess-room', {name:userName,mess:mess,room:room,date:new Date()});
+  }
+  
+}
+//data => name:userName,mess:mess,room:room,date:new Date()
+io.on('nhan-tin-nhan-room',data =>{
+  if (data.name === userName) {
+    $(".chat-list").append(
+      '<div class="chat bubble-right">' + data.mess + "</div>"
+    );
+  } else {
+    $(".chat-list").append(
+     
+      '<div class="chat bubble-left">' +
+      '<p class = "name-left">'+data.name+'</p>'+
+       
+      '<p class = "mess-left">'+data.mess+'</p>'+
+      '</div>'
+
+    );
+  }
+  var element = document.getElementById("out");
+  element.scrollTop = element.scrollHeight;
+
+});
+
+io.on('update-list-mess-room',array =>{
+  $(".chat-list").html("");
+
+  for (let index = 0; index < array.length; index++) {
+    const element = array[index];
+    var mess = element.mess;
+    if (element.name === userName) {
+      $(".chat-list").append(
+        '<div class="chat bubble-right">' + mess + "</div>"
+      );
+    } else {
+      $(".chat-list").append(
+       
+        '<div class="chat bubble-left">' +
+        '<p class = "name-left">'+element.name+'</p>'+
+         
+        '<p class = "mess-left">'+mess+'</p>'+
+        '</div>'
+
+      );
+    }
+  }
+
+  var element = document.getElementById("out");
+  element.scrollTop = element.scrollHeight;
 });

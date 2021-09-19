@@ -1,5 +1,6 @@
 const express = require("express");
 const { get } = require("http");
+const { join } = require("path");
 const { uuid } = require("uuidv4");
 
 const app = express();
@@ -111,9 +112,48 @@ io.on("connection", (socket) => {
   socket.on('add-human-for-group',data =>{
     addHumanForGroup(data,socket);
   });
+
+  socket.on('send-mess-room',data =>{
+    sendMessRoom(data,socket);
+  });
+  socket.on('join-room-group',data =>{
+    socket.join(data.id);
+    joinRoomGroup(data,socket);
+  });
 });
+
 //-----------------------------Tao room-------------------------
 var arrayRoom = [];
+
+// join room
+//data => {name:userName,id:id,room:name}
+function joinRoomGroup(data,socket) {
+  var room = searchRoom(data.room);
+  socket.emit('update-list-mess-room',room.arrayMess);
+}
+
+//data =>  {name:userName,mess:mess,room:room,date:new Date()}
+//send mess room
+function sendMessRoom(data,socket) {
+  var name = data.name;
+  var mess = data.mess;
+  var room = searchRoom(data.room);
+  var arrayMember = room.arrayMember;
+  
+  room.arrayMess.push(data);
+  io.in(room.id).emit('nhan-tin-nhan-room', data);
+  for (let index = 0; index < arrayMember.length; index++) {
+    const element = arrayMember[index];
+    var user = getUser(element.name);
+     var roomUser = searchRoomUser(room.name,user.arrayRoom);
+     roomUser.mess = data;
+    io.to(user.id).emit('create-room-sus',user.arrayRoom);
+
+  }
+   
+  
+}
+
 // them thanh vien vao room
 // data => { userName: userName, roomName: room }
 function addHumanForGroup(data,socket) {
@@ -143,9 +183,10 @@ function addHumanForGroup(data,socket) {
 
   // neu chua thi push vao room server
   arrayHu.push({name:user.name,permission: 2});
+  room.arrayMess.push({name:socket.name,mess:socket.name+' đã thêm '+data.userName+' vào nhóm',room:data.roomName,date:new Date()})
 
   // push room vao room cua user dc moi
-  user.arrayRoom.push({nameRoom:room.name, id:room.id,number: arrayHu.length});
+  user.arrayRoom.push({nameRoom:room.name, id:room.id,number: arrayHu.length,mess:room.arrayMess[room.arrayMess.length-1]});
 
   // thong bao ve cho toan bo thanh vien trong room
   for (let index = 0; index < arrayHu.length; index++) {
@@ -155,7 +196,9 @@ function addHumanForGroup(data,socket) {
 
     // set lai so thanh vien trong room
     arrayRoomUser.number = arrayHu.length;
+    arrayRoomUser.mess = room.arrayMess[room.arrayMess.length-1];
     io.to(userAll.id).emit('create-room-sus',userAll.arrayRoom);
+    io.in(room.id).emit('update-list-mess-room',room.arrayMess);
 
     
   }
@@ -174,16 +217,17 @@ function createRoom(data,socket) {
     }
     
   }
-  // add vao room user
+  // lay user
   var user = getUser(data.userName);
 
   // add room vao room server
   var rooms = new room(data.roomName);
+  rooms.arrayMess.push({name:data.userName,mess:'tạo room',room:data.roomName,date:new Date()})
   rooms.arrayMember.push({name:user.name,permission: 1});
   arrayRoom.push(rooms); 
 
   // add room vao rom user
-  user.arrayRoom.push({nameRoom:data.roomName, id:rooms.id,number: 1});
+  user.arrayRoom.push({nameRoom:data.roomName, id:rooms.id,number: 1,mess:rooms.arrayMess[rooms.arrayMess.length-1]});
   // gui ve cho client
   socket.emit('create-room-sus',user.arrayRoom);
 
