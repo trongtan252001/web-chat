@@ -1,40 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="socket.io/socket.io.js"></script>
-    <script src="signin.js"></script>
 
+<!doctype html>
+<html>
+<head>
+<title>Đăng nhập</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- fonts -->
+
+<!-- /fonts -->
+<!-- css -->
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="sigin.css" rel='stylesheet' type='text/css' media="all" />
+<!-- /css -->
 </head>
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-3"></div>
-            <div class="col-sm-6">
-                    <div class="form-group">
-                      <label for="exampleInputName">Name</label>
-                      <input type="text" class="form-control" id="exampleInputName" aria-describedby="emailHelp" placeholder="Name">
-                    </div>
-                    <div class="form-group">
-                      <label for="exampleInputPassword1">Password</label>
-                      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                    </div>
-                    <button type="submit" class="btn btn-primary" onclick="dangNhap()">Dang nhap</button>
-                    <button class="btn btn-primary" onclick="window.location='/signup';">Dang ky</button>
+<h1 class="w3ls">Đăng Nhập IVY moda</h1>
+<div class="content-w3ls">
+	<div class="content-agile1">
+		<a href="">
+			<h2 title="Trang chủ" class="agileits1">IVY moda</h2>
 
+		</a>
+	</div>
+	<div class="content-agile2">
+		<form action="" method="POST" >
+		
 
-            </div>
-            <div class="col-sm-3"></div>
-        </div>
-    </div>
+			<div class="form-control w3layouts">	
+				<input  id="email" name="name" placeholder="UserName" title="Vui lòng nhập UserName" required="">
+			</div>
 
-      <script src="script.js"></script>
-      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+			<div class="form-control agileinfo">	
+				<input type="password" class="lock" name="pass" title="Vui Lòng nhập password" placeholder="Password" id="password1" required="">
+			</div>	
+
+			<input type="submit" class="register"  value="Đăng Nhập">
+		</form>
+	
+		<p class="wthree w3l">Đăng ký nhanh với tài khoản xã hội của bạn</p>
+		<ul class="social-agileinfo wthree2">
+			<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+			<li><a href="#"><i class="fa fa-youtube"></i></a></li>
+			<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+			<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+		</ul>
+	</div>
+	<div class="clear"></div>
+</div>
+<!-- <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script> -->
+<link href="//fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Monoton" rel="stylesheet">
 </body>
 </html>

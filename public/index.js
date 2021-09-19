@@ -1,6 +1,24 @@
 var io = io("http://localhost:3000");
-var urlParams = new URLSearchParams(window.location.search);
-var userName = urlParams.get("n");
+
+
+
+ io.emit("dangNhap", { name: userName, password: password });
+ 
+
+// io.on("dang-nhap-thanh-cong", (name) => {
+//   // window.location = "/" + name;
+//   alert("dang nhap thanh cong ");
+
+// });
+io.on("dang-nhap-that-bai", (name) => {
+  window.location = "/";
+
+  return;
+});
+
+
+
+
 io.emit("user-online", userName);
 
 $(document).ready(function () {
@@ -368,10 +386,13 @@ function hideModalSearch() {
   document.getElementById("overlay").style.display = "none";
 }
 
-function ClickAddRoom() {
+
+async function ClickAddRoom() {
+  
   const roomName = prompt("Nhập tên nhóm");
   if (roomName) {
-    io.emit("create-room", { userName: userName, roomName: roomName });
+  
+    io.emit("create-room", { userName: userName, roomName: roomName ,id:room});
   }
 }
 io.on("create-room-err", (nameRoom) => {

@@ -7,7 +7,10 @@ const app = express();
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.set("views", "./views");
-
+app.use(express.urlencoded({
+  extended: true
+}));
+app.use(express.json());
 const port = 3000;
 
 const server = require("http").Server(app);
@@ -18,15 +21,19 @@ server.listen(port);
 app.get("/", (req, res) => {
   res.render("signin");
 });
-app.get("/home", (req, res) => {
-  res.render("index");
-});
+app.post('/',(req,res) =>{
+  // console.log(req.body);
+  res.render("index",{name:req.body.name,pass:req.body.pass});
+
+})
+
 app.get("/signup", (req, res) => {
   res.render("signup");
 });
 app.get("/call", (req, res) => {
   res.render("call");
 });
+
 var thongTinNguoiDung = [];
 thongTinNguoiDung.push(new nguoiDung("linh", "123"));
 thongTinNguoiDung.push(new nguoiDung("h1", "123"));
@@ -205,9 +212,8 @@ function addHumanForGroup(data,socket) {
 
 
 }
-// data =>  {userName:userName,roomName:roomName});
+// data =>  {userName:userName,roomName:roomName,id:});
 function createRoom(data,socket) {
-
   // xem room da ton tai chua
   for (let index = 0; index < arrayRoom.length; index++) {
     const element = arrayRoom[index];
@@ -221,7 +227,7 @@ function createRoom(data,socket) {
   var user = getUser(data.userName);
 
   // add room vao room server
-  var rooms = new room(data.roomName);
+  var rooms = new room(data.roomName, data.id);
   rooms.arrayMess.push({name:data.userName,mess:'tạo room',room:data.roomName,date:new Date()})
   rooms.arrayMember.push({name:user.name,permission: 1});
   arrayRoom.push(rooms); 
@@ -252,9 +258,9 @@ function searchRoom(room) {
   }
   return null;
 }
-function room(name) {
+function room(name, id) {
   this.name = name;
-  this.id = uuid();
+  this.id = id;
   this.arrayMember = [];//name:user.name,permission: 1
   this.arrayMess = [];
 }
