@@ -12,10 +12,54 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href="sigin.css" rel='stylesheet' type='text/css' media="all" />
+<!-- sign up js -->
+<script src="socket.io/socket.io.js"></script>
+
+<script src="signup.js"></script>
+
 <!-- /css -->
 </head>
 <body>
-<h1 class="w3ls">Đăng Nhập IVY moda</h1>
+
+
+    <div class="container right-panel-active">
+        <!-- Sign Up -->
+        <div class="container__form container--signup">
+            <form action="#" class="form" id="form1">
+                <h2 class="form__title">Đăng ký</h2>
+                <input type="text" placeholder="Tên đăng nhập"  class="input" id="exampleInputName1"/>
+                <input type="password" placeholder="Mật khẩu" class="input" id="exampleInputPassword1"/>
+                <input type="password" placeholder="Nhập lại mật khẩu" class="input" id="exampleConfirmPassword1"/>
+                <button class="btn" onclick="dangKy()">Đăng ký</button>
+            </form>
+        </div>
+
+        <!-- Sign In -->
+        <div class="container__form container--signin content-agile2">
+            <form action="" method="POST" class="form" id="form2">
+                <h2 class="form__title">Đăng nhập</h2>
+                <input type="text" placeholder="Tên đăng nhập" name="name" class="input" id="email"  title="Vui lòng nhập UserName" required=""/>
+                <input type="password" placeholder="Mật khẩu" name="pass" class="input" id="password1" title="Vui Lòng nhập password" required=""/>
+                <a href="#" class="link">Quên mật khẩu</a>
+                <!-- <button class="btn">Đăng nhập</button> -->
+                <input type="submit" class="register btn"  value="Đăng Nhập">
+            </form>
+        </div>
+
+        <!-- Overlay -->
+        <div class="container__overlay">
+            <div class="overlay">
+                <div class="overlay__panel overlay--left">
+                    <button class="btn" id="signIn">Sign In</button>
+                </div>
+                <div class="overlay__panel overlay--right">
+                    <button class="btn" id="signUp">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- <h1 class="w3ls">Đăng Nhập IVY moda</h1>
 <div class="content-w3ls">
 	<div class="content-agile1">
 		<a href="">
@@ -25,20 +69,20 @@
 	</div>
 	<div class="content-agile2">
 		<form action="" method="POST" >
-		
 
-			<div class="form-control w3layouts">	
+
+			<div class="form-control w3layouts">
 				<input  id="email" name="name" placeholder="UserName" title="Vui lòng nhập UserName" required="">
 			</div>
 
-			<div class="form-control agileinfo">	
+			<div class="form-control agileinfo">
 				<input type="password" class="lock" name="pass" title="Vui Lòng nhập password" placeholder="Password" id="password1" required="">
-			</div>	
+			</div>
 
 			<input type="submit" class="register"  value="Đăng Nhập">
 			<a href="/signup"><input  type="button" class="register"  value="Đăng Ký"></a>
 		</form>
-	
+
 		<p class="wthree w3l">Đăng ký nhanh với tài khoản xã hội của bạn</p>
 		<ul class="social-agileinfo wthree2">
 			<li><a href="#"><i class="fa fa-facebook"></i></a></li>
@@ -48,7 +92,26 @@
 		</ul>
 	</div>
 	<div class="clear"></div>
-</div>
+</div> -->
+<script>
+    //sytle
+    const signInBtn = document.getElementById("signIn");
+    const signUpBtn = document.getElementById("signUp");
+    const fistForm = document.getElementById("form1");
+    const secondForm = document.getElementById("form2");
+    const container = document.querySelector(".container");
+
+    signInBtn.addEventListener("click", () => {
+    container.classList.remove("right-panel-active");
+    });
+
+    signUpBtn.addEventListener("click", () => {
+    container.classList.add("right-panel-active");
+    });
+
+    fistForm.addEventListener("submit", (e) => e.preventDefault());
+    secondForm.addEventListener("submit", (e) => e.preventDefault());
+</script>
 <!-- <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script> -->
 <link href="//fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900" rel="stylesheet">
 <link href="//fonts.googleapis.com/css?family=Monoton" rel="stylesheet">
